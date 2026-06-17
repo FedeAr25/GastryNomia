@@ -1,0 +1,255 @@
+{%extends 'base.html'%}
+
+{% block body %}
+<section class="bg-white md:m-2 md:rounded-lg flex-1 overflow-y-auto mt-16 md:mt-0">
+    <div class="p-4 sm:p-6 md:p-8">
+        <header class="flex flex-col sm:flex-row justify-between items-start sm:items-center pb-4 mb-6 border-b gap-4">
+            <div>
+                <h1 class="text-2xl sm:text-3xl font-bold text-orange-500">Desafíos Culinarios</h1>
+                <p class="text-gray-600 text-sm sm:text-base">Participa, aprende y gana premios increíbles</p>
+            </div>
+            <div class="flex flex-col sm:flex-row gap-3 w-full sm:w-auto">
+                <a href="form.html" class="w-full sm:w-auto">
+                    <button
+                        class="w-full sm:w-auto px-4 py-2 border border-gray-300 rounded-md text-gray-700 hover:bg-gray-50 text-sm sm:text-base transition-colors">
+                        Iniciar Sesión
+                    </button>
+                </a>
+                <a href="recipes.html" class="w-full sm:w-auto">
+                    <button
+                        class="w-full sm:w-auto px-4 py-2 bg-orange-500 text-white rounded-md hover:bg-orange-600 flex items-center justify-center text-sm sm:text-base transition-colors">
+                        <i class="fa-solid fa-plus mr-2"></i> Crear receta
+                    </button>
+                </a>
+            </div>
+        </header>
+
+        <div class="bg-gradient-to-r from-orange-50 to-orange-100 rounded-xl p-6 mb-8 border border-orange-100">
+            <div class="flex flex-col md:flex-row items-center gap-6">
+                <div class="relative w-full md:w-1/3">
+                    <img src="https://plus.unsplash.com/premium_photo-1722686461601-b2a018a4213b?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&q=80&w=955"
+                        alt="Desafío destacado" class="w-full h-48 object-cover rounded-lg shadow-md">
+                    <span
+                        class="absolute top-3 right-3 bg-white text-orange-500 text-xs font-bold px-3 py-1 rounded-full shadow">¡Nuevo!</span>
+                </div>
+                <div class="flex-1 text-center md:text-left">
+                    <h2 class="text-2xl font-bold text-orange-500 mb-2">Desafío de la Semana</h2>
+                    <h3 class="text-xl font-semibold text-gray-800 mb-3">Postres sin Horno</h3>
+                    <p class="text-gray-600 mb-4">Demuestra tu creatividad preparando un postre delicioso sin necesidad
+                        de horno. ¡Los mejores recibirán premios increíbles!</p>
+                    <div class="flex flex-col sm:flex-row gap-3 items-center justify-between">
+                        <div class="flex items-center text-sm text-gray-600">
+                            <i class="far fa-calendar-alt mr-2 text-orange-500"></i>
+                            <span>Hasta el 02/11/2025</span>
+                        </div>
+                        <button
+                            class="bg-orange-500 hover:bg-orange-600 text-white px-6 py-2 rounded-full font-medium transition-colors w-full sm:w-auto">
+                            Participar ahora
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <section class="mb-8 sm:mb-10">
+            <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-4 sm:mb-6 gap-3">
+                <h2 class="text-lg sm:text-xl font-bold text-gray-800 flex items-center">
+                    <i class="fa-solid fa-fire text-orange-500 mr-2"></i>
+                    Desafíos Activos
+                </h2>
+                <a href="#" class="text-sm text-orange-500 hover:underline whitespace-nowrap">Ver todos</a>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="border rounded-xl overflow-hidden hover:shadow-lg transition-shadow">
+                    <div class="relative">
+                        <img src="https://plus.unsplash.com/premium_photo-1673590981774-d9f534e0c617?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&q=80&w=687"
+                            alt="Receta vegetariana" class="w-full h-48 object-cover">
+                        <div class="absolute top-3 right-3">
+                            <span class="bg-green-100 text-green-800 text-xs font-medium px-2.5 py-0.5 rounded-full">En
+                                curso</span>
+                        </div>
+                    </div>
+                    <div class="p-5">
+                        <div class="flex justify-between items-start mb-2">
+                            <h3 class="text-lg font-bold text-gray-900">Reto Vegetariano</h3>
+                            <div class="flex items-center">
+                                <i class="fas fa-users text-gray-400 text-sm mr-1"></i>
+                                <span class="text-gray-600 text-sm">245 participantes</span>
+                            </div>
+                        </div>
+                        <h4 class="text-orange-500 font-medium mb-3">Plato Principal Veggie</h4>
+                        <p class="text-gray-600 text-sm mb-4">Sorpréndenos con un plato vegetariano que sea el
+                            protagonista de cualquier mesa. ¡Los ingredientes son tu límite!</p>
+                        <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
+                            <div class="flex items-center text-sm text-gray-500">
+                                <i class="far fa-clock mr-1"></i>
+                                <span>Termina en 5 días</span>
+                            </div>
+                            <button class="text-orange-500 hover:text-orange-600 font-medium text-sm flex items-center">
+                                Ver detalles
+                                <i class="fa-solid fa-arrow-right ml-1 text-xs"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="border rounded-xl overflow-hidden hover:shadow-lg transition-shadow">
+                    <div class="relative">
+                        <img src="https://images.unsplash.com/photo-1512621776951-a57141f2eefd?q=80&w=600&auto=format&fit=crop"
+                            alt="Receta saludable" class="w-full h-48 object-cover">
+                        <div class="absolute top-3 right-3">
+                            <span
+                                class="bg-blue-100 text-blue-800 text-xs font-medium px-2.5 py-0.5 rounded-full">Próximamente</span>
+                        </div>
+                    </div>
+                    <div class="p-5">
+                        <div class="flex justify-between items-start mb-2">
+                            <h3 class="text-lg font-bold text-gray-900">Cocina Saludable</h3>
+                            <div class="flex items-center">
+                                <i class="fas fa-users text-gray-400 text-sm mr-1"></i>
+                                <span class="text-gray-600 text-sm">Próximamente</span>
+                            </div>
+                        </div>
+                        <h4 class="text-orange-500 font-medium mb-3">Desayunos Energéticos</h4>
+                        <p class="text-gray-600 text-sm mb-4">Prepara el desayuno perfecto que te cargue de energía para
+                            todo el día, usando solo ingredientes saludables.</p>
+                        <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
+                            <div class="flex items-center text-sm text-gray-500">
+                                <i class="far fa-clock mr-1"></i>
+                                <span>Inicia en 3 días</span>
+                            </div>
+                            <button
+                                class="text-orange-500 hover:text-orange-600 font-medium text-sm flex items-center opacity-50 cursor-not-allowed"
+                                disabled>
+                                Próximamente
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="mb-10">
+            <h2 class="text-xl font-bold text-gray-800 mb-6 flex items-center">
+                <i class="fa-solid fa-trophy text-orange-500 mr-2"></i>
+                Desafíos Anteriores
+            </h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div class="border rounded-lg overflow-hidden hover:shadow-md transition-shadow">
+                    <div class="h-32 bg-gray-100 relative">
+                        <img src="https://images.unsplash.com/photo-1484723091739-30a097e8f929?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&q=80&w=749"
+                            alt="Postres fríos" class="w-full h-full object-cover">
+                        <div class="absolute inset-0 bg-black/40 flex items-center justify-center">
+                            <span
+                                class="bg-white text-orange-500 text-xs font-bold px-3 py-1 rounded-full">Finalizado</span>
+                        </div>
+                    </div>
+                    <div class="p-4">
+                        <h3 class="font-bold text-gray-800">Postres Fríos de Verano</h3>
+                        <p class="text-gray-500 text-sm mt-1">Finalizado el 15/10/2025</p>
+                        <button class="mt-3 text-orange-500 hover:text-orange-600 text-sm font-medium">
+                            Ver ganadores
+                        </button>
+                    </div>
+                </div>
+
+                <div class="border rounded-lg overflow-hidden hover:shadow-md transition-shadow">
+                    <div class="h-32 bg-gray-100 relative">
+                        <img src="https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&q=80&w=1981"
+                            alt="Cocina internacional" class="w-full h-full object-cover">
+                        <div class="absolute inset-0 bg-black/40 flex items-center justify-center">
+                            <span
+                                class="bg-white text-orange-500 text-xs font-bold px-3 py-1 rounded-full">Finalizado</span>
+                        </div>
+                    </div>
+                    <div class="p-4">
+                        <h3 class="font-bold text-gray-800">Sabores del Mundo</h3>
+                        <p class="text-gray-500 text-sm mt-1">Finalizado el 30/09/2025</p>
+                        <button class="mt-3 text-orange-500 hover:text-orange-600 text-sm font-medium">
+                            Ver ganadores
+                        </button>
+                    </div>
+                </div>
+
+                <div
+                    class="border-2 border-dashed border-gray-300 rounded-lg flex flex-col items-center justify-center p-6 text-center hover:border-orange-300 transition-colors">
+                    <i class="fa-solid fa-ellipsis text-gray-300 text-3xl mb-3"></i>
+                    <h3 class="font-medium text-gray-600">Más desafíos</h3>
+                    <p class="text-sm text-gray-500 mt-1">Descubre todos nuestros desafíos anteriores</p>
+                    <a href="#" class="mt-3 text-orange-500 text-sm font-medium hover:underline">Ver todos</a>
+                </div>
+            </div>
+        </section>
+
+        <section class="bg-orange-50 rounded-xl p-6 mb-10 border border-orange-100">
+            <h2 class="text-xl font-bold text-gray-800 mb-6 flex items-center">
+                <i class="fa-solid fa-gift text-orange-500 mr-2"></i>
+                Premios y Beneficios
+            </h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="text-center">
+                    <div
+                        class="w-16 h-16 bg-orange-100 rounded-full flex items-center justify-center text-orange-500 text-2xl mx-auto mb-3">
+                        <i class="fas fa-medal"></i>
+                    </div>
+                    <h3 class="font-bold text-gray-800 mb-2">Reconocimiento</h3>
+                    <p class="text-gray-600 text-sm">Destaca tu perfil y gana visibilidad en nuestra comunidad de
+                        amantes de la cocina.</p>
+                </div>
+                <div class="text-center">
+                    <div
+                        class="w-16 h-16 bg-orange-100 rounded-full flex items-center justify-center text-orange-500 text-2xl mx-auto mb-3">
+                        <i class="fas fa-award"></i>
+                    </div>
+                    <h3 class="font-bold text-gray-800 mb-2">Premios Exclusivos</h3>
+                    <p class="text-gray-600 text-sm">Recibe productos de cocina, libros de recetas y más de nuestros
+                        patrocinadores.</p>
+                </div>
+                <div class="text-center">
+                    <div
+                        class="w-16 h-16 bg-orange-100 rounded-full flex items-center justify-center text-orange-500 text-2xl mx-auto mb-3">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <h3 class="font-bold text-gray-800 mb-2">Comunidad</h3>
+                    <p class="text-gray-600 text-sm">Conecta con otros participantes y comparte experiencias culinarias.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <section class="flex-1 mt-16 md:mt-0 p-4 sm:p-6 md:p-8 lg:p-12 xl:p-16 gap-6">
+            <div class="bg-gradient-to-r from-orange-500 to-orange-600 rounded-xl p-8 text-white text-center">
+                <h2 class="text-2xl font-bold mb-3">¿Listo para el desafío?</h2>
+                <p class="mb-6 max-w-2xl mx-auto">Únete a nuestra comunidad de cocineros apasionados y lleva tus
+                    habilidades al siguiente nivel.</p>
+                <div class="flex flex-col sm:flex-row gap-3 justify-center">
+                    <a href="#"
+                        class="px-6 py-3 bg-white text-orange-600 font-medium rounded-lg hover:bg-gray-100 transition-colors">
+                        Ver bases del concurso
+                    </a>
+                    <a href="form.html"
+                        class="px-6 py-3 border-2 border-white text-white font-medium rounded-lg hover:bg-white hover:bg-opacity-10 transition-colors">
+                        Regístrate para participar
+                    </a>
+                </div>
+            </div>
+            <div class="flex-1 text-center md:text-left mt-6 md:mt-6 lg:mt-8 xl:mt-10">
+                <h2 class="text-2xl font-bold text-orange-500 mb-2">Desafío de la Semana</h2>
+                <h3 class="text-xl font-semibold text-gray-800 mb-3">Postres sin Horno</h3>
+                <p class="text-gray-600 mb-4">Demuestra tu creatividad preparando un postre delicioso sin necesidad de
+                    horno. ¡Los mejores recibirán premios increíbles!</p>
+                <div class="flex flex-col sm:flex-row gap-3 items-center justify-between">
+                    <div class="flex items-center text-sm text-gray-600">
+                        <i class="far fa-calendar-alt mr-2 text-orange-500"></i>
+                        <span>Hasta el 02/11/2025</span>
+                    </div>
+                    <button
+                        class="bg-orange-500 hover:bg-orange-600 text-white px-6 py-2 rounded-full font-medium transition-colors w-full sm:w-auto">
+                        Participar ahora
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        {% endblock %}

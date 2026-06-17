@@ -1,0 +1,162 @@
+{% extends 'base.html' %}
+
+{% block body %}
+<section class="bg-white md:m-2 md:rounded-lg flex-1 overflow-y-auto mt-16 md:mt-0">
+    <div class="p-4 sm:p-6 md:p-8">
+        <header class="flex flex-col sm:flex-row justify-between items-start sm:items-center pb-4 mb-6 border-b gap-4">
+            <div>
+                <h1 class="text-2xl sm:text-3xl font-bold text-orange-500">Sobre Recetas GastryNomia</h1>
+                <p class="text-gray-600 text-sm sm:text-base">Conoce nuestra historia, valores y al equipo que hace
+                    posible este proyecto</p>
+            </div>
+        </header>
+
+        <div
+            class="bg-linear-to-r from-orange-50 to-orange-100 rounded-xl p-4 sm:p-6 mb-8 flex flex-col md:flex-row items-center gap-4 sm:gap-6 border border-orange-100">
+            <img class="w-32 h-32 md:w-40 md:h-40 rounded-full object-cover border-4 border-white shadow-lg"
+                src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTboImNmiKKZVaGJFPzObv5l9qhCVoTJ0KeAw&s"
+                alt="Tía Luci">
+            <div class="text-center md:text-left">
+                <h2 class="text-2xl font-bold text-orange-500 mb-3">Nuestra historia</h2>
+                <p class="text-gray-700 mb-4">Nacimos para compartir recetas caseras, accesibles y llenas de sabor. Aquí
+                    encontrarás ideas para el día a día, clásicos de siempre y toques modernos, todo explicado paso a
+                    paso para que cocinar sea un placer.</p>
+                <div class="flex flex-wrap justify-center md:justify-start gap-2">
+                    <span class="bg-orange-100 text-orange-800 text-xs px-3 py-1 rounded-full">Desde 2020</span>
+                    <span class="bg-orange-100 text-orange-800 text-xs px-3 py-1 rounded-full">+1000 recetas</span>
+                    <span class="bg-orange-100 text-orange-800 text-xs px-3 py-1 rounded-full">Comunidad activa</span>
+                </div>
+            </div>
+        </div>
+
+        <section class="mb-8 sm:mb-10">
+            <h2 class="text-lg sm:text-xl font-bold text-gray-800 mb-4 flex items-center">
+                <i class="fa-solid fa-heart text-orange-500 mr-2"></i>
+                Nuestros valores
+            </h2>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                <div class="bg-white border rounded-lg p-5 hover:shadow-md transition-shadow">
+                    <div
+                        class="w-12 h-12 bg-orange-100 rounded-full flex items-center justify-center text-orange-500 mb-3">
+                        <i class="fas fa-seedling text-xl"></i>
+                    </div>
+                    <h3 class="font-bold text-lg text-gray-800 mb-2">Misión</h3>
+                    <p class="text-gray-600">Inspirar a cocinar con lo que tienes a mano, cuidando tu tiempo y tu
+                        presupuesto, sin sacrificar el sabor ni la alegría de compartir.</p>
+                </div>
+                <div class="bg-white border rounded-lg p-5 hover:shadow-md transition-shadow">
+                    <div
+                        class="w-12 h-12 bg-orange-100 rounded-full flex items-center justify-center text-orange-500 mb-3">
+                        <i class="fas fa-hands-helping text-xl"></i>
+                    </div>
+                    <h3 class="font-bold text-lg text-gray-800 mb-2">Valores</h3>
+                    <p class="text-gray-600">Calidez, simplicidad y comunidad. Creemos que cocinar es compartir y que
+                        cada plato cuenta una historia.</p>
+                </div>
+                <div class="bg-white border rounded-lg p-5 hover:shadow-md transition-shadow">
+                    <div
+                        class="w-12 h-12 bg-orange-100 rounded-full flex items-center justify-center text-orange-500 mb-3">
+                        <i class="fas fa-award text-xl"></i>
+                    </div>
+                    <h3 class="font-bold text-lg text-gray-800 mb-2">Calidad</h3>
+                    <p class="text-gray-600">Probamos cada receta y explicamos los trucos para que siempre salga
+                        perfecta, incluso si es tu primera vez en la cocina.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="mb-8 sm:mb-10">
+            <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-4 gap-3">
+                <h2 class="text-lg sm:text-xl font-bold text-gray-800 flex items-center">
+                    <i class="fa-solid fa-people-group text-orange-500 mr-2"></i>
+                    Conoce al equipo
+                </h2>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="border rounded-lg overflow-hidden hover:shadow-lg transition-shadow">
+                    <div class="h-40 bg-orange-50 flex items-center justify-center">
+                        <img class="w-24 h-24 rounded-full object-cover border-4 border-white shadow-md"
+                            src="./assets/images/eman-about.jpeg" alt="Emanuel">
+                    </div>
+                    <div class="p-4 text-center">
+                        <h3 class="font-bold text-lg">Emanuel Cepeda Cáceres</h3>
+                        <p class="text-orange-500 text-sm font-medium mb-2">Fundador y Desarrollador</p>
+                        <p class="text-gray-600 text-sm">"Desarrollador web y diseñador gráfico con experiencia en el
+                            desarrollo de aplicaciones web y móviles."</p>
+                    </div>
+                </div>
+                <div class="border rounded-lg overflow-hidden hover:shadow-lg transition-shadow">
+                    <div class="h-40 bg-orange-50 flex items-center justify-center">
+                        <img class="w-24 h-24 rounded-full object-cover border-4 border-white shadow-md"
+                            src="./assets/images/fede.jpg" alt="Federico">
+                    </div>
+                    <div class="p-4 text-center">
+                        <h3 class="font-bold text-lg">Federico Ezequiel Arballo</h3>
+                        <p class="text-orange-500 text-sm font-medium mb-2">Contenido y fotografía</p>
+                        <p class="text-gray-600 text-sm">"Capturo la esencia de cada plato para que se vea tan bien como
+                            sabe."</p>
+                    </div>
+                </div>
+                <div class="border rounded-lg overflow-hidden hover:shadow-lg transition-shadow">
+                    <div class="h-40 bg-orange-50 flex items-center justify-center">
+                        <img class="w-24 h-24 rounded-full object-cover border-4 border-white shadow-md"
+                            src="./assets/images/rafa-about.jpeg" alt="Joaquin">
+                    </div>
+                    <div class="p-4 text-center">
+                        <h3 class="font-bold text-lg">Joaquin Ramón Rodriguez</h3>
+                        <p class="text-orange-500 text-sm font-medium mb-2">Desarrollo y comunidad</p>
+                        <p class="text-gray-600 text-sm">"Desarrollador web y diseñador gráfico con experiencia en el
+                            desarrollo de aplicaciones web y móviles."</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <iframe src="https://prezi.com/p/embed/SZjBIoq4Sc3UfOHz062N/" id="iframe_container" frameborder="0"
+            webkitallowfullscreen="" mozallowfullscreen="" allowfullscreen="" allow="autoplay; fullscreen" height="315"
+            width="560" class="w-full h-128 rounded-lg my-8"></iframe>
+
+        <section class="mb-8 sm:mb-10">
+            <h2 class="text-xl font-bold text-gray-800 mb-4 flex items-center">
+                <i class="fa-solid fa-circle-question text-orange-500 mr-2"></i>
+                Preguntas frecuentes
+            </h2>
+            <div class="space-y-3">
+                <div class="border rounded-lg overflow-hidden">
+                    <button
+                        class="flex justify-between items-center w-full p-4 text-left hover:bg-gray-50 transition-colors">
+                        <span class="font-medium">¿Puedo enviar mi receta?</span>
+                        <i class="fa-solid fa-chevron-down text-orange-500"></i>
+                    </button>
+                    <div class="px-4 pb-4 text-gray-600">
+                        <p>Sí, ¡nos encantaría probar tu receta! Compártela desde la sección Recetas con el botón "Crear
+                            receta". Nuestro equipo la revisará y la publicaremos en la plataforma.</p>
+                    </div>
+                </div>
+                <div class="border rounded-lg overflow-hidden">
+                    <button
+                        class="flex justify-between items-center w-full p-4 text-left hover:bg-gray-50 transition-colors">
+                        <span class="font-medium">¿Usan ingredientes fáciles de conseguir?</span>
+                        <i class="fa-solid fa-chevron-down text-orange-500"></i>
+                    </button>
+                    <div class="px-4 pb-4 text-gray-600">
+                        <p>¡Por supuesto! Priorizamos ingredientes locales y siempre incluimos opciones de sustitución
+                            para que puedas adaptar las recetas a lo que tengas en tu despensa.</p>
+                    </div>
+                </div>
+                <div class="border rounded-lg overflow-hidden">
+                    <button
+                        class="flex justify-between items-center w-full p-4 text-left hover:bg-gray-50 transition-colors">
+                        <span class="font-medium">¿Tienen recetas sin gluten o veganas?</span>
+                        <i class="fa-solid fa-chevron-down text-orange-500"></i>
+                    </button>
+                    <div class="px-4 pb-4 text-gray-600">
+                        <p>Sí, tenemos una amplia variedad de opciones. Puedes filtrar por categoría o revisar nuestras
+                            colecciones destacadas para encontrar recetas sin gluten, veganas, vegetarianas y más.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</section>
+{% endblock %}

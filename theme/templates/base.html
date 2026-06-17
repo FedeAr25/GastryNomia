@@ -1,0 +1,72 @@
+{% load static tailwind_tags %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>GastryNomia</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    {% tailwind_css %}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+</head>
+
+<body class="bg-violet-500/5 p-2">
+    <div class="flex gap-2 w-full">
+
+        <aside
+            class="flex flex-col gap-10 bg-orange-400 w-2/12 h-[calc(100vh-1rem)] sticky top-2 px-4 rounded-xl py-6 ">
+            <div class="flex p-2 justify-around items-center">
+                <img class="w-20 h-20 rounded-full object-cover"
+                    src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTboImNmiKKZVaGJFPzObv5l9qhCVoTJ0KeAw&s"
+                    alt="">
+                <h1 class="text-white font-bold text-2xl">GastryNomia</h1>
+            </div>
+            <ul class="space-y-2 md:space-y-3">
+                <li><a href="{% url 'landing'%}"
+                        class="flex items-center text-gray-200 hover:bg-orange-500 rounded-lg p-3 transition-colors"><i
+                            class="fa-solid fa-magnifying-glass w-6 text-center"></i><span
+                            class="ml-3 text-sm md:text-base">Casa</span></a></li>
+                <li><a href="{% url 'about'%}"
+                        class="flex items-center text-gray-200 hover:bg-orange-500 rounded-lg p-3 transition-colors"><i
+                            class="fa-solid fa-people-group w-6 text-center"></i><span
+                            class="ml-3 text-sm md:text-base">Sobre Nosotros</span></a></li>
+                <li><a href="{%url 'challenges' %}"
+                        class="flex items-center text-gray-200 hover:bg-orange-500 rounded-lg p-3 transition-colors"><i
+                            class="fa-solid fa-trophy w-6 text-center"></i><span
+                            class="ml-3 text-sm md:text-base">Desafíos</span></a></li>
+                <li><a href="{%url  'collection'%}"
+                        class="flex items-center text-gray-200 hover:bg-orange-500 rounded-lg p-3 transition-colors"><i
+                            class="fa-solid fa-heart w-6 text-center"></i><span class="ml-3 text-sm md:text-base">Tu
+                            Colección</span></a></li>
+                <li><a href="{% url 'recipes'%}"
+                        class="flex items-center p-3 rounded-lg transition-colors hover:bg-orange-500 text-gray-200 hover:text-white"><i
+                            class="fa-solid fa-utensils w-6 text-center"></i><span
+                            class="ml-3 text-sm md:text-base">Recetas</span></a></li>
+            </ul>
+        </aside>
+
+        <div class="flex flex-col gap-2 w-10/12">
+            <nav
+                class="flex w-80 h-20 bg-red-700/0 items-center justify-between sticky top-2 rounded-xl ml-auto mr-2 z-40">
+                <a href="{%url 'register' %}"
+                    class="px-6 py-3 bg-white text-gray-700 font-medium rounded-lg border border-gray-200 shadow-sm hover:bg-gray-50 transition duration-300 transform hover:-translate-y-0.5">
+                    Iniciar Sesión
+                </a>
+                <a href="#"
+                    class="px-6 py-3 bg-orange-600 text-white font-medium rounded-lg shadow-lg hover:bg-orange-700 transition duration-300 transform hover:-translate-y-0.5">
+                    Crea tu Receta
+                </a>
+            </nav>
+
+            <div class="-mt-22 rounded-xl overflow-hidden">
+                {% block body %}
+                {% endblock %}
+            </div>
+
+        </div>
+    </div>
+
+</body>
+
+</html>

@@ -1,0 +1,314 @@
+{% extends 'base.html' %}
+
+{% block body %}
+<section class="bg-white md:m-2 md:rounded-lg flex-1 overflow-y-auto mt-16 md:mt-0">
+    <div class="p-4 sm:p-6 md:p-8">
+        <header class="flex flex-col sm:flex-row justify-between items-start sm:items-center pb-4 mb-6 border-b gap-4">
+            <div>
+                <h1 class="text-2xl sm:text-3xl font-bold text-orange-500">Bienvenido a {{user}} Recetas GastryNomia
+                </h1>
+                <p class="text-gray-600 text-sm sm:text-base">Descubre y comparte las mejores recetas caseras</p>
+            </div>
+        </header>
+
+        <div
+            class="bg-linear-to-r from-orange-100 to-orange-50 rounded-lg p-4 sm:p-6 mb-6 sm:mb-8 flex flex-col sm:flex-row items-center justify-between gap-4">
+            <div class="flex flex-col sm:flex-row items-center text-center sm:text-left">
+                <img class="w-20 h-20 sm:w-24 sm:h-24 object-cover rounded-full border-4 border-white shadow-md flex-shrink-0"
+                    src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTboImNmiKKZVaGJFPzObv5l9qhCVoTJ0KeAw&s"
+                    alt="Chef Tia Luci">
+                <div class="mt-4 sm:mt-0 sm:ml-4 md:ml-6">
+                    <h2 class="text-xl sm:text-2xl font-bold text-gray-800">¡Bienvenido a la cocina de GastryNomia!</h2>
+                    <p class="text-gray-600 text-sm sm:text-base">Descubre recetas deliciosas y comparte tus propias
+                        creaciones.</p>
+                </div>
+            </div>
+            <div class="flex items-center space-x-1 sm:space-x-2 text-yellow-400 mt-2 sm:mt-0">
+                <i class="fas fa-star text-sm sm:text-base"></i>
+                <i class="fas fa-star text-sm sm:text-base"></i>
+                <i class="fas fa-star text-sm sm:text-base"></i>
+                <i class="fas fa-star text-sm sm:text-base"></i>
+                <i class="fas fa-star-half-alt text-sm sm:text-base"></i>
+                <span class="text-gray-600 ml-1 sm:ml-2 text-sm sm:text-base">4.8/5</span>
+            </div>
+        </div>
+
+        <div class="mb-6 sm:mb-8">
+            <div class="relative max-w-2xl mx-auto">
+                <div class="relative">
+                    <input type="text"
+                        class="w-full p-3 sm:p-4 pl-10 sm:pl-12 pr-24 sm:pr-28 border border-gray-300 rounded-full shadow-sm focus:ring-2 focus:ring-orange-400 focus:border-transparent text-sm sm:text-base"
+                        placeholder="Buscar recetas, ingredientes...">
+                    <button class="absolute left-3 sm:left-4 top-1/2 transform -translate-y-1/2 text-gray-400">
+                        <i class="fa-solid fa-magnifying-glass text-sm sm:text-base"></i>
+                    </button>
+                    <button
+                        class="absolute right-1 sm:right-2 top-1/2 transform -translate-y-1/2 bg-orange-500 text-white px-3 sm:px-4 py-1 sm:py-1.5 rounded-full text-xs sm:text-sm hover:bg-orange-600 transition-colors whitespace-nowrap">
+                        Buscar
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <section class="mb-8 sm:mb-10">
+            <div class="flex justify-between items-center mb-3 sm:mb-4">
+                <h2 class="text-lg sm:text-xl font-bold text-gray-800 flex items-center">
+                    <i class="fa-solid fa-tags text-orange-500 mr-2"></i>
+                    Explora por categoría
+                </h2>
+                <a href="#" class="text-sm text-orange-500 hover:underline hidden sm:inline-block">Ver todas</a>
+            </div>
+            <div class="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4">
+                <div class="relative h-28 sm:h-32 overflow-hidden rounded-lg group cursor-pointer">
+                    <img src="https://imgs.search.brave.com/2-3-dq86UoncBxyKT79Xy1lRdLDYedMwf9NWqzTgxe0/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9tZWRp/YS5pc3RvY2twaG90/by5jb20vaWQvMTQw/MDY1MDQwL2VzL2Zv/dG8vZW5zYWxhZGEt/ZGUtcGFzdGEuanBn/P3M9NjEyeDYxMiZ3/PTAmaz0yMCZjPURo/bS1kV1hrdmFnQkwz/SGNud1dFTGJXRUhw/TDc1X1o2NE5YVHVm/ZDlJMFk9"
+                        alt="Pastas"
+                        class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110">
+                    <div class="absolute inset-0 bg-black/40 group-hover:bg-opacity-20 transition-all duration-300">
+                    </div>
+                    <p
+                        class="absolute bottom-0 left-0 right-0 text-center text-white font-bold text-sm sm:text-base md:text-lg p-2 bg-gradient-to-t from-black/70 to-transparent">
+                        PASTAS</p>
+                </div>
+                <div class="relative h-28 sm:h-32 overflow-hidden rounded-lg group cursor-pointer">
+                    <img src="https://imgs.search.brave.com/ATLGKUbI_mDiSXDTsjW-lRwD1qmK3NrRAkjj1v0sAyE/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9pbWcu/MTAwci5zeXN0ZW1z/L2ltZy85NTg3YjA5/NTFmNzA0YzM3ZDRi/NmFhZmI0MTI0OTE5/Yi5qcGc"
+                        alt="Gourmet"
+                        class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110">
+                    <div class="absolute inset-0 bg-black/40 group-hover:bg-opacity-20 transition-all duration-300">
+                    </div>
+                    <p
+                        class="absolute bottom-0 left-0 right-0 text-center text-white font-bold text-sm sm:text-base md:text-lg p-2 bg-gradient-to-t from-black/70 to-transparent">
+                        GOURMET</p>
+                </div>
+                <div class="relative h-28 sm:h-32 overflow-hidden rounded-lg group cursor-pointer">
+                    <img src="https://images.unsplash.com/photo-1551024506-0bccd828d307?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&q=80&w=764"
+                        alt="Postres"
+                        class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110">
+                    <div class="absolute inset-0 bg-black/40 group-hover:bg-opacity-20 transition-all duration-300">
+                    </div>
+                    <p
+                        class="absolute bottom-0 left-0 right-0 text-center text-white font-bold text-sm sm:text-base md:text-lg p-2 bg-gradient-to-t from-black/70 to-transparent">
+                        POSTRES</p>
+                </div>
+                <div class="relative h-28 sm:h-32 overflow-hidden rounded-lg group cursor-pointer">
+                    <img src="https://imgs.search.brave.com/mt0FaZuvEm0H4mr0HyqRnE_sNUyx2-tH_wwh6JhDBAQ/rs:fit:500:0:1:0/g:ce/aHR0cHM6Ly90aHVt/YnMuZHJlYW1zdGlt/ZS5jb20vYi9hcmdl/bnRpbmUtYXNhZG8t/cHJlcGFyaW5nLW9w/ZW4tYWlyLW1hcmtl/dC0xMDIzMDc5MjMu/anBn"
+                        alt="Carnes"
+                        class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110">
+                    <div class="absolute inset-0 bg-black/40 group-hover:bg-opacity-20 transition-all duration-300">
+                    </div>
+                    <p
+                        class="absolute bottom-0 left-0 right-0 text-center text-white font-bold text-sm sm:text-base md:text-lg p-2 bg-gradient-to-t from-black/70 to-transparent">
+                        CARNES</p>
+                </div>
+            </div>
+            <div class="text-center mt-3 sm:hidden">
+                <a href="#" class="text-sm text-orange-500 hover:underline">Ver todas las categorías</a>
+            </div>
+        </section>
+
+        <section class="mb-8 sm:mb-10">
+            <div class="flex justify-between items-center mb-3 sm:mb-4">
+                <h2 class="text-lg sm:text-xl font-bold text-gray-800 flex items-center">
+                    <i class="fa-solid fa-star text-orange-500 mr-2"></i>
+                    Recetas destacadas
+                </h2>
+                <a href="#" class="text-sm text-orange-500 hover:underline hidden sm:inline-block">Ver todas</a>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5 md:gap-6">
+                <div class="border rounded-lg overflow-hidden hover:shadow-lg transition-shadow duration-300">
+                    <div class="h-40 sm:h-44 md:h-48 bg-gray-200 relative">
+                        <img src="https://images.pexels.com/photos/1639562/pexels-photo-1639562.jpeg" alt="Hamburguesa"
+                            class="w-full h-full object-cover">
+                        <div class="absolute top-2 right-2">
+                            <button
+                                class="bg-white p-1.5 sm:p-2 rounded-full text-red-500 hover:bg-red-50 transition-colors">
+                                <i class="fa-regular fa-heart text-sm sm:text-base"></i>
+                            </button>
+                        </div>
+                        <div class="absolute bottom-0 left-0 right-0 p-2 bg-gradient-to-t from-black/70 to-transparent">
+                            <span
+                                class="bg-yellow-400 text-[10px] sm:text-xs px-2 py-0.5 sm:py-1 rounded-full font-medium">Popular</span>
+                        </div>
+                    </div>
+                    <div class="p-3 sm:p-4">
+                        <h3 class="font-bold text-base sm:text-lg mb-1">Hamburguesa Clásica</h3>
+                        <p class="text-gray-600 text-xs sm:text-sm mb-2 sm:mb-3 line-clamp-2">Una jugosa hamburguesa con
+                            queso cheddar, lechuga y salsa especial</p>
+                        <div class="flex justify-between items-center text-xs sm:text-sm">
+                            <div class="flex items-center text-yellow-400">
+                                <i class="fas fa-star text-xs sm:text-sm"></i>
+                                <span class="text-gray-600 ml-1">4.8</span>
+                                <span class="text-gray-400 mx-1">•</span>
+                                <span class="text-gray-500">30 min</span>
+                            </div>
+                            <button class="text-orange-500 hover:text-orange-600 p-1">
+                                <i class="fa-solid fa-ellipsis-vertical text-sm sm:text-base"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="border rounded-lg overflow-hidden hover:shadow-lg transition-shadow duration-300">
+                    <div class="h-40 sm:h-44 md:h-48 bg-gray-200 relative">
+                        <img src="https://images.unsplash.com/photo-1544025162-d76694265947?q=80&w=1000&auto=format&fit=crop"
+                            alt="Pasta" class="w-full h-full object-cover">
+                        <div class="absolute top-2 right-2">
+                            <button
+                                class="bg-white p-1.5 sm:p-2 rounded-full text-red-500 hover:bg-red-50 transition-colors">
+                                <i class="fa-regular fa-heart text-sm sm:text-base"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="p-3 sm:p-4">
+                        <h3 class="font-bold text-base sm:text-lg mb-1">Pasta Alfredo Casera</h3>
+                        <p class="text-gray-600 text-xs sm:text-sm mb-2 sm:mb-3 line-clamp-2">Cremosa salsa alfredo con
+                            champiñones y perejil fresco</p>
+                        <div class="flex justify-between items-center text-xs sm:text-sm">
+                            <div class="flex items-center text-yellow-400">
+                                <i class="fas fa-star text-xs sm:text-sm"></i>
+                                <span class="text-gray-600 ml-1">4.6</span>
+                                <span class="text-gray-400 mx-1">•</span>
+                                <span class="text-gray-500">25 min</span>
+                            </div>
+                            <button class="text-orange-500 hover:text-orange-600 p-1">
+                                <i class="fa-solid fa-ellipsis-vertical text-sm sm:text-base"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="border rounded-lg overflow-hidden hover:shadow-lg transition-shadow duration-300">
+                    <div class="h-40 sm:h-44 md:h-48 bg-gray-200 relative">
+                        <img src="https://images.unsplash.com/photo-1567620905732-2d1ec7ab7445?q=80&w=1000&auto=format&fit=crop"
+                            alt="Panqueques" class="w-full h-full object-cover">
+                        <div class="absolute top-2 right-2">
+                            <button
+                                class="bg-white p-1.5 sm:p-2 rounded-full text-red-500 hover:bg-red-50 transition-colors">
+                                <i class="fa-regular fa-heart text-sm sm:text-base"></i>
+                            </button>
+                        </div>
+                        <div class="absolute top-2 left-2">
+                            <span
+                                class="bg-green-100 text-green-800 text-[10px] sm:text-xs px-2 py-0.5 sm:py-1 rounded-full font-medium">Nuevo</span>
+                        </div>
+                    </div>
+                    <div class="p-3 sm:p-4">
+                        <h3 class="font-bold text-base sm:text-lg mb-1">Panqueques Especiales</h3>
+                        <p class="text-gray-600 text-xs sm:text-sm mb-2 sm:mb-3 line-clamp-2">Esponjosos panqueques con
+                            miel y frutas de estación</p>
+                        <div class="flex justify-between items-center text-xs sm:text-sm">
+                            <div class="flex items-center text-yellow-400">
+                                <i class="fas fa-star text-xs sm:text-sm"></i>
+                                <span class="text-gray-600 ml-1">4.9</span>
+                                <span class="text-gray-400 mx-1">•</span>
+                                <span class="text-gray-500">20 min</span>
+                            </div>
+                            <button class="text-orange-500 hover:text-orange-600 p-1">
+                                <i class="fa-solid fa-ellipsis-vertical text-sm sm:text-base"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="border rounded-lg overflow-hidden hover:shadow-lg transition-shadow duration-300">
+                    <div class="h-40 sm:h-44 md:h-48 bg-gray-200 relative">
+                        <img src="https://images.unsplash.com/photo-1476887334197-56adbf254e1a?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&q=80&w=687"
+                            alt="Hamburguesa" class="w-full h-full object-cover">
+                        <div class="absolute top-2 right-2">
+                            <button
+                                class="bg-white p-1.5 sm:p-2 rounded-full text-red-500 hover:bg-red-50 transition-colors">
+                                <i class="fa-regular fa-heart text-sm sm:text-base"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="p-3 sm:p-4">
+                        <h3 class="font-bold text-base sm:text-lg mb-1">Tarta de Arandanos</h3>
+                        <p class="text-gray-600 text-xs sm:text-sm mb-2 sm:mb-3 line-clamp-2">Deliciosas tarta de
+                            arandanos con queso crema y mermelada de arandanos</p>
+                        <div class="flex justify-between items-center text-xs sm:text-sm">
+                            <div class="flex items-center text-yellow-400">
+                                <i class="fas fa-star text-xs sm:text-sm"></i>
+                                <span class="text-gray-600 ml-1">4.5</span>
+                                <span class="text-gray-400 mx-1">•</span>
+                                <span class="text-gray-500">45 min</span>
+                            </div>
+                            <button class="text-orange-500 hover:text-orange-600 p-1">
+                                <i class="fa-solid fa-ellipsis-vertical text-sm sm:text-base"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="border rounded-lg overflow-hidden hover:shadow-lg transition-shadow duration-300">
+                    <div class="h-40 sm:h-44 md:h-48 bg-gray-200 relative">
+                        <img src="https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&q=80&w=781"
+                            alt="Hamburguesa" class="w-full h-full object-cover">
+                        <div class="absolute top-2 right-2">
+                            <button
+                                class="bg-white p-1.5 sm:p-2 rounded-full text-red-500 hover:bg-red-50 transition-colors">
+                                <i class="fa-regular fa-heart text-sm sm:text-base"></i>
+                            </button>
+                        </div>
+                        <div class="absolute bottom-0 left-0 right-0 p-2 bg-gradient-to-t from-black/70 to-transparent">
+                            <span
+                                class="bg-yellow-400 text-[10px] sm:text-xs px-2 py-0.5 sm:py-1 rounded-full font-medium">Popular</span>
+                        </div>
+                    </div>
+                    <div class="p-3 sm:p-4">
+                        <h3 class="font-bold text-base sm:text-lg mb-1">Pizza Margherita</h3>
+                        <p class="text-gray-600 text-xs sm:text-sm mb-2 sm:mb-3 line-clamp-2">Pizza margherita con queso
+                            mozzarella, tomate y albahaca</p>
+                        <div class="flex justify-between items-center text-xs sm:text-sm">
+                            <div class="flex items-center text-yellow-400">
+                                <i class="fas fa-star text-xs sm:text-sm"></i>
+                                <span class="text-gray-600 ml-1">4.8</span>
+                                <span class="text-gray-400 mx-1">•</span>
+                                <span class="text-gray-500">30 min</span>
+                            </div>
+                            <button class="text-orange-500 hover:text-orange-600 p-1">
+                                <i class="fa-solid fa-ellipsis-vertical text-sm sm:text-base"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="border rounded-lg overflow-hidden hover:shadow-lg transition-shadow duration-300">
+                    <div class="h-40 sm:h-44 md:h-48 bg-gray-200 relative">
+                        <img src="https://images.unsplash.com/photo-1519915028121-7d3463d20b13?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&q=80&w=687"
+                            alt="Hamburguesa" class="w-full h-full object-cover">
+                        <div class="absolute top-2 right-2">
+                            <button
+                                class="bg-white p-1.5 sm:p-2 rounded-full text-red-500 hover:bg-red-50 transition-colors">
+                                <i class="fa-regular fa-heart text-sm sm:text-base"></i>
+                            </button>
+                        </div>
+                        <div class="absolute bottom-0 left-0 right-0 p-2 bg-gradient-to-t from-black/70 to-transparent">
+                            <span
+                                class="bg-yellow-400 text-[10px] sm:text-xs px-2 py-0.5 sm:py-1 rounded-full font-medium">Popular</span>
+                        </div>
+                    </div>
+                    <div class="p-3 sm:p-4">
+                        <h3 class="font-bold text-base sm:text-lg mb-1">Lemon Pie</h3>
+                        <p class="text-gray-600 text-xs sm:text-sm mb-2 sm:mb-3 line-clamp-2">Delicioso pastel de limón
+                            con queso crema y mermelada de limón</p>
+                        <div class="flex justify-between items-center text-xs sm:text-sm">
+                            <div class="flex items-center text-yellow-400">
+                                <i class="fas fa-star text-xs sm:text-sm"></i>
+                                <span class="text-gray-600 ml-1">4.8</span>
+                                <span class="text-gray-400 mx-1">•</span>
+                                <span class="text-gray-500">50 min</span>
+                            </div>
+                            <button class="text-orange-500 hover:text-orange-600 p-1">
+                                <i class="fa-solid fa-ellipsis-vertical text-sm sm:text-base"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="text-center mt-6">
+                <a href="#"
+                    class="inline-block px-4 py-2 bg-orange-500 text-white rounded-md hover:bg-orange-600 text-sm font-medium transition-colors">
+                    Ver más recetas
+                </a>
+            </div>
+    </div>
+</section>
+{% endblock %}

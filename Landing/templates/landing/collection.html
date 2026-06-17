@@ -1,0 +1,291 @@
+{% extends 'base.html'%}
+{% block body %}
+<section class="bg-white md:m-2 md:rounded-lg flex-1 overflow-y-auto mt-16 md:mt-0">
+    <div class="p-4 sm:p-6 md:p-8">
+        <header class="flex flex-col sm:flex-row justify-between items-start sm:items-center pb-4 mb-6 border-b gap-4">
+            <div>
+                <div class="flex items-center gap-3">
+                    <h1 class="text-2xl sm:text-3xl font-bold text-orange-500">Tu Colección</h1>
+                    <span
+                        class="bg-orange-100 text-orange-600 text-xs sm:text-sm px-2 sm:px-3 py-0.5 sm:py-1 rounded-full whitespace-nowrap">12
+                        recetas guardadas</span>
+                </div>
+                <p class="text-gray-600 text-sm sm:text-base mt-1">Tus recetas favoritas, organizadas y listas para
+                    cocinar</p>
+            </div>
+            <div class="w-full sm:w-auto flex flex-col sm:flex-row gap-3">
+                <div class="relative flex-1">
+                    <input type="text" placeholder="Buscar en tu colección..."
+                        class="w-full pl-10 pr-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-orange-400 focus:border-transparent text-sm sm:text-base">
+                    <i
+                        class="fa-solid fa-magnifying-glass absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+                </div>
+                <button
+                    class="px-3 sm:px-4 py-2 bg-white border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 flex items-center justify-center gap-2 whitespace-nowrap">
+                    <i class="fa-solid fa-sliders text-sm sm:text-base"></i>
+                    <span class="text-sm sm:text-base">Filtrar</span>
+                </button>
+            </div>
+        </header>
+
+        <div class="mb-6 p-4 bg-orange-50 rounded-lg">
+            <div class="flex flex-wrap items-center gap-2">
+                <span class="text-sm text-gray-600 mr-2">Filtros:</span>
+                <span
+                    class="bg-white border border-orange-200 text-orange-600 text-sm px-3 py-1 rounded-full flex items-center">
+                    Postres
+                    <button class="ml-2 text-orange-400 hover:text-orange-600">
+                        <i class="fa-solid fa-xmark text-xs"></i>
+                    </button>
+                </span>
+                <span
+                    class="bg-white border border-orange-200 text-orange-600 text-sm px-3 py-1 rounded-full flex items-center">
+                    Rápidas
+                    <button class="ml-2 text-orange-400 hover:text-orange-600">
+                        <i class="fa-solid fa-xmark text-xs"></i>
+                    </button>
+                </span>
+                <button class="text-orange-500 text-sm hover:underline ml-auto flex items-center">
+                    <i class="fa-solid fa-rotate-left mr-1"></i>
+                    Limpiar filtros
+                </button>
+            </div>
+        </div>
+
+        <div class="mb-8">
+            <h2 class="text-lg font-semibold text-gray-800 mb-3">Categorías</h2>
+            <div class="flex flex-wrap gap-2">
+                <button
+                    class="px-4 py-2 bg-orange-500 text-white rounded-full text-sm font-medium hover:bg-orange-600 transition-colors">
+                    Todas
+                </button>
+                <button
+                    class="px-4 py-2 bg-white border border-gray-200 rounded-full text-sm text-gray-700 hover:bg-gray-50 transition-colors">
+                    <i class="fa-solid fa-utensils text-orange-400 mr-2"></i>Platos principales
+                </button>
+                <button
+                    class="px-4 py-2 bg-white border border-gray-200 rounded-full text-sm text-gray-700 hover:bg-gray-50 transition-colors">
+                    <i class="fa-solid fa-ice-cream text-pink-400 mr-2"></i>Postres
+                </button>
+                <button
+                    class="px-4 py-2 bg-white border border-gray-200 rounded-full text-sm text-gray-700 hover:bg-gray-50 transition-colors">
+                    <i class="fa-solid fa-leaf text-green-400 mr-2"></i>Ensaladas
+                </button>
+                <button
+                    class="px-4 py-2 bg-white border border-gray-200 rounded-full text-sm text-gray-700 hover:bg-gray-50 transition-colors">
+                    <i class="fa-solid fa-bolt text-yellow-400 mr-2"></i>Rápidas
+                </button>
+            </div>
+        </div>
+
+        <div>
+            <div class="flex justify-between items-center mb-4">
+                <h2 class="text-xl font-semibold text-gray-800">Tus recetas guardadas</h2>
+                <div class="flex items-center text-sm text-gray-500">
+                    <span class="mr-2">Ordenar por:</span>
+                    <select
+                        class="border-0 bg-transparent text-orange-500 font-medium focus:ring-0 focus:ring-offset-0">
+                        <option>Recientes</option>
+                        <option>Mejor valoradas</option>
+                        <option>Tiempo de preparación</option>
+                        <option>Alfabéticamente</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div
+                    class="group border border-gray-200 rounded-xl overflow-hidden hover:shadow-lg transition-all duration-300">
+                    <div class="relative h-48 bg-gray-100 overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1544025162-d76694265947?q=80&w=600&auto=format&fit=crop"
+                            alt="Pasta Alfredo"
+                            class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
+                        <button
+                            class="absolute top-3 right-3 w-9 h-9 bg-white rounded-full flex items-center justify-center text-red-500 shadow-md hover:bg-red-50 transition-colors">
+                            <i class="fa-solid fa-heart"></i>
+                        </button>
+                        <div class="absolute bottom-0 left-0 right-0 p-3 bg-gradient-to-t from-black/70 to-transparent">
+                            <div class="flex items-center text-white text-sm">
+                                <i class="far fa-clock mr-1"></i>
+                                <span>30 min</span>
+                                <span class="mx-2">•</span>
+                                <i class="fas fa-utensils mr-1"></i>
+                                <span>4 porciones</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="p-4">
+                        <div class="flex justify-between items-start mb-2">
+                            <h3 class="font-bold text-lg text-gray-900 group-hover:text-orange-500 transition-colors">
+                                Pasta Alfredo Casera</h3>
+                            <div
+                                class="flex items-center bg-yellow-100 text-yellow-700 text-xs font-semibold px-2 py-1 rounded">
+                                <i class="fas fa-star text-yellow-400 mr-1"></i>
+                                4.8
+                            </div>
+                        </div>
+                        <p class="text-gray-600 text-sm mb-3 line-clamp-2">Cremosa salsa alfredo con champiñones
+                            salteados, espinacas frescas y un toque de nuez moscada. Perfecta para una cena
+                            reconfortante.</p>
+                        <div class="flex flex-wrap gap-2 mt-3 pt-3 border-t">
+                            <span class="bg-orange-100 text-orange-600 text-xs px-2.5 py-1 rounded-full">Italiana</span>
+                            <span class="bg-blue-100 text-blue-600 text-xs px-2.5 py-1 rounded-full">Pasta</span>
+                            <span
+                                class="bg-green-100 text-green-600 text-xs px-2.5 py-1 rounded-full">Vegetariana</span>
+                        </div>
+                    </div>
+                    <div class="px-4 pb-4 pt-0">
+                        <button
+                            class="w-full py-2 border border-orange-400 text-orange-500 rounded-lg font-medium hover:bg-orange-50 transition-colors flex items-center justify-center gap-2">
+                            <i class="fa-solid fa-book-open"></i>
+                            Ver receta
+                        </button>
+                    </div>
+                </div>
+
+                <div
+                    class="group border border-gray-200 rounded-xl overflow-hidden hover:shadow-lg transition-all duration-300">
+                    <div class="relative h-48 bg-gray-100 overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1512621776951-a57141f2eefd?q=80&w=600&auto=format&fit=crop"
+                            alt="Ensalada César"
+                            class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
+                        <button
+                            class="absolute top-3 right-3 w-9 h-9 bg-white rounded-full flex items-center justify-center text-red-500 shadow-md hover:bg-red-50 transition-colors">
+                            <i class="fa-solid fa-heart"></i>
+                        </button>
+                        <div class="absolute bottom-0 left-0 right-0 p-3 bg-gradient-to-t from-black/70 to-transparent">
+                            <div class="flex items-center text-white text-sm">
+                                <i class="far fa-clock mr-1"></i>
+                                <span>15 min</span>
+                                <span class="mx-2">•</span>
+                                <i class="fas fa-utensils mr-1"></i>
+                                <span>2 porciones</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="p-4">
+                        <div class="flex justify-between items-start mb-2">
+                            <h3 class="font-bold text-lg text-gray-900 group-hover:text-orange-500 transition-colors">
+                                Ensalada César</h3>
+                            <div
+                                class="flex items-center bg-yellow-100 text-yellow-700 text-xs font-semibold px-2 py-1 rounded">
+                                <i class="fas fa-star text-yellow-400 mr-1"></i>
+                                4.5
+                            </div>
+                        </div>
+                        <p class="text-gray-600 text-sm mb-3 line-clamp-2">Clásica ensalada César con pollo a la
+                            parrilla, crutones caseros, hojas de lechuga romana y nuestra salsa cremosa secreta.</p>
+                        <div class="flex flex-wrap gap-2 mt-3 pt-3 border-t">
+                            <span class="bg-green-100 text-green-600 text-xs px-2.5 py-1 rounded-full">Ensaladas</span>
+                            <span class="bg-yellow-100 text-yellow-600 text-xs px-2.5 py-1 rounded-full">Ligero</span>
+                            <span class="bg-blue-100 text-blue-600 text-xs px-2.5 py-1 rounded-full">Pollo</span>
+                        </div>
+                    </div>
+                    <div class="px-4 pb-4 pt-0">
+                        <button
+                            class="w-full py-2 border border-orange-400 text-orange-500 rounded-lg font-medium hover:bg-orange-50 transition-colors flex items-center justify-center gap-2">
+                            <i class="fa-solid fa-book-open"></i>
+                            Ver receta
+                        </button>
+                    </div>
+                </div>
+
+                <div
+                    class="group border border-gray-200 rounded-xl overflow-hidden hover:shadow-lg transition-all duration-300">
+                    <div class="relative h-48 bg-gray-100 overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1564355808539-22fda35bed7e?q=80&w=600&auto=format&fit=crop"
+                            alt="Brownie de Chocolate"
+                            class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
+                        <button
+                            class="absolute top-3 right-3 w-9 h-9 bg-white rounded-full flex items-center justify-center text-red-500 shadow-md hover:bg-red-50 transition-colors">
+                            <i class="fa-solid fa-heart"></i>
+                        </button>
+                        <div class="absolute bottom-0 left-0 right-0 p-3 bg-gradient-to-t from-black/70 to-transparent">
+                            <div class="flex items-center text-white text-sm">
+                                <i class="far fa-clock mr-1"></i>
+                                <span>45 min</span>
+                                <span class="mx-2">•</span>
+                                <i class="fas fa-utensils mr-1"></i>
+                                <span>9 porciones</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="p-4">
+                        <div class="flex justify-between items-start mb-2">
+                            <h3 class="font-bold text-lg text-gray-900 group-hover:text-orange-500 transition-colors">
+                                Brownie de Chocolate</h3>
+                            <div
+                                class="flex items-center bg-yellow-100 text-yellow-700 text-xs font-semibold px-2 py-1 rounded">
+                                <i class="fas fa-star text-yellow-400 mr-1"></i>
+                                4.9
+                            </div>
+                        </div>
+                        <p class="text-gray-600 text-sm mb-3 line-clamp-2">Delicioso brownie con un centro suave y
+                            trozos de chocolate negro, nueces tostadas y un toque de canela. Perfecto para los amantes
+                            del chocolate.</p>
+                        <div class="flex flex-wrap gap-2 mt-3 pt-3 border-t">
+                            <span class="bg-pink-100 text-pink-600 text-xs px-2.5 py-1 rounded-full">Postres</span>
+                            <span class="bg-amber-100 text-amber-600 text-xs px-2.5 py-1 rounded-full">Chocolate</span>
+                            <span class="bg-purple-100 text-purple-600 text-xs px-2.5 py-1 rounded-full">Horneado</span>
+                        </div>
+                    </div>
+                    <div class="px-4 pb-4 pt-0">
+                        <button
+                            class="w-full py-2 border border-orange-400 text-orange-500 rounded-lg font-medium hover:bg-orange-50 transition-colors flex items-center justify-center gap-2">
+                            <i class="fa-solid fa-book-open"></i>
+                            Ver receta
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="hidden border-2 border-dashed border-gray-300 rounded-xl p-12 text-center my-12">
+                <div class="w-20 h-20 bg-orange-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <i class="fa-regular fa-heart text-orange-400 text-3xl"></i>
+                </div>
+                <h3 class="text-xl font-semibold text-gray-800 mb-2">Tu colección está vacía</h3>
+                <p class="text-gray-500 max-w-md mx-auto mb-6">Guarda tus recetas favoritas para tenerlas siempre a
+                    mano. Haz clic en el corazón <i class="fa-solid fa-heart text-red-400 mx-1"></i> de cualquier receta
+                    para agregarla a tu colección.</p>
+                <a href="index.html"
+                    class="inline-flex items-center justify-center px-6 py-3 bg-orange-500 hover:bg-orange-600 text-white font-medium rounded-lg transition-colors">
+                    <i class="fa-solid fa-utensils mr-2"></i>
+                    Explorar recetas
+                </a>
+            </div>
+
+            <div class="flex flex-col sm:flex-row justify-between items-center mt-10 pt-6 border-t border-gray-200">
+                <p class="text-sm text-gray-500 mb-4 sm:mb-0">Mostrando 1-3 de 12 recetas</p>
+                <nav class="inline-flex rounded-md shadow-sm">
+                    <button
+                        class="px-3 py-2 rounded-l-lg border border-gray-300 bg-white text-gray-500 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
+                        disabled>
+                        <span class="sr-only">Anterior</span>
+                        <i class="fa-solid fa-chevron-left"></i>
+                    </button>
+                    <button
+                        class="px-4 py-2 border-t border-b border-gray-300 bg-orange-50 text-orange-600 font-medium">
+                        1
+                    </button>
+                    <button class="px-4 py-2 border border-gray-300 bg-white text-gray-700 hover:bg-gray-50">
+                        2
+                    </button>
+                    <button class="px-4 py-2 border border-gray-300 bg-white text-gray-700 hover:bg-gray-50">
+                        3
+                    </button>
+                    <span class="px-4 py-2 border border-gray-300 bg-white text-gray-500">
+                        ...
+                    </span>
+                    <button class="px-4 py-2 border border-gray-300 bg-white text-gray-700 hover:bg-gray-50">
+                        4
+                    </button>
+                    <button
+                        class="px-3 py-2 rounded-r-lg border border-gray-300 bg-white text-gray-500 hover:bg-gray-50">
+                        <span class="sr-only">Siguiente</span>
+                        <i class="fa-solid fa-chevron-right"></i>
+                    </button>
+                </nav>
+            </div>
+        </div>
+</section>
+{% endblock%}
