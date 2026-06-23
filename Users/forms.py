@@ -8,20 +8,18 @@ class UsuarioPersonalizadoForm(UserCreationForm):
         model = UsuarioPersonalizado
         fields = UserCreationForm.Meta.fields + ("telefono", "dni", "foto_perfil")
 
-        input_styles = "w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent transition duration-200"
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
 
-        widgets = {
-            "username": forms.TextInput(
-                attrs={"class": input_styles, "placeholder": "Ej. chef_fede"}
-            ),
-            "email": forms.EmailInput(
-                attrs={"class": input_styles, "placeholder": "correo@gastrynomia.com"}
-            ),
-            # ¡AQUÍ ESTÁ EL TRUCO! Django los llama password1 y password2
-            "password1": forms.PasswordInput(
-                attrs={"class": input_styles, "placeholder": "Contraseña"}
-            ),
-            "password2": forms.PasswordInput(
-                attrs={"class": input_styles, "placeholder": "Repite tu contraseña"}
-            ),
-        }
+        # 1. Eliminar el texto de ayuda SOLO del Username:
+        self.fields["username"].help_text = ""
+
+        # 2. Eliminar el texto de ayuda SOLO de la contraseña (las reglas):
+        # En los formularios de creación de Django, el primer campo de contraseña se llama 'username' o viene atado a validadores,
+        # pero para quitar ese bloque gigante de texto de las contraseñas puedes vaciar estos campos que lo traen embebido:
+        if "username" in self.fields:
+            self.fields["username"].help_text = ""
+
+        # Si tienes campos específicos de los que quieras borrar el texto,
+        # simplemente los llamas por su nombre entre los corchetes:
+        # self.fields['telefono'].help_text = ''
