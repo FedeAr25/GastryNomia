@@ -1,0 +1,192 @@
+{% extends 'base.html' %}
+{% block body %}
+<section class="bg-white md:m-2 md:rounded-lg flex-1 overflow-y-auto mt-16 md:mt-0">
+    <div class="p-4 sm:p-6 md:p-8">
+
+        <!-- Header -->
+                <header class="flex flex-col sm:flex-row justify-between items-start sm:items-center pb-4 mb-6 border-b gap-4">
+            <div>
+                <div class="flex items-center gap-3">
+                    <h1 class="text-2xl sm:text-3xl font-bold text-orange-500">Tu Colección</h1>
+                    <span
+                        class="bg-orange-100 text-orange-600 text-xs sm:text-sm px-2 sm:px-3 py-0.5 sm:py-1 rounded-full whitespace-nowrap">12
+                        recetas guardadas</span>
+                </div>
+                <p class="text-gray-600 text-sm sm:text-base mt-1">Tus recetas favoritas, organizadas y listas para
+                    cocinar</p>
+            </div>
+
+        </header>
+
+        <div class="mb-8">
+            <h2 class="text-lg font-semibold text-gray-800 mb-3">Categorías</h2>
+            <div class="flex flex-wrap gap-2">
+                <button
+                    class="px-4 py-2 bg-orange-500 text-white rounded-full text-sm font-medium hover:bg-orange-600 transition-colors">
+                    Todas
+                </button>
+                <button
+                    class="px-4 py-2 bg-white border border-gray-200 rounded-full text-sm text-gray-700 hover:bg-gray-50 transition-colors">
+                    <i class="fa-solid fa-utensils text-orange-400 mr-2"></i>Platos principales
+                </button>
+                <button
+                    class="px-4 py-2 bg-white border border-gray-200 rounded-full text-sm text-gray-700 hover:bg-gray-50 transition-colors">
+                    <i class="fa-solid fa-ice-cream text-pink-400 mr-2"></i>Postres
+                </button>
+                <button
+                    class="px-4 py-2 bg-white border border-gray-200 rounded-full text-sm text-gray-700 hover:bg-gray-50 transition-colors">
+                    <i class="fa-solid fa-leaf text-green-400 mr-2"></i>Ensaladas
+                </button>
+                <button
+                    class="px-4 py-2 bg-white border border-gray-200 rounded-full text-sm text-gray-700 hover:bg-gray-50 transition-colors">
+                    <i class="fa-solid fa-bolt text-yellow-400 mr-2"></i>Rápidas
+                </button>
+            </div>
+        </div>
+
+        <!-- Búsqueda y filtros -->
+        <form method="get" class="mb-6 flex flex-col sm:flex-row gap-3">
+            <div class="relative flex-1">
+                <input type="text" name="q" value="{{ q }}"
+                    placeholder="Buscar recetas..."
+                    class="w-full pl-10 pr-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-orange-400 focus:border-transparent">
+                <i class="fa-solid fa-magnifying-glass absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"></i>
+            </div>
+            <select name="dificultad"
+                class="py-2 px-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-orange-400 text-gray-700 bg-white">
+                <option value="">Todas las dificultades</option>
+                {% for val, label in dificultad_choices %}
+                <option value="{{ val }}" {% if dificultad == val %}selected{% endif %}>{{ label }}</option>
+                {% endfor %}
+            </select>
+            <button type="submit"
+                class="px-4 py-2 bg-orange-500 text-white rounded-lg hover:bg-orange-600 transition-colors whitespace-nowrap">
+                Buscar
+            </button>
+            {% if q or dificultad %}
+            <a href="{% url 'explorar' %}"
+                class="px-4 py-2 border border-gray-300 text-gray-600 rounded-lg hover:bg-gray-50 transition-colors whitespace-nowrap flex items-center gap-1">
+                <i class="fa-solid fa-rotate-left text-sm"></i> Limpiar
+            </a>
+            {% endif %}
+        </form>
+
+        <!-- Grid de recetas -->
+        {% if recetas %}
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {% for receta in recetas %}
+            <article class="group border border-gray-200 rounded-xl overflow-hidden hover:shadow-lg transition-all duration-300 flex flex-col">
+
+                <!-- Imagen -->
+                <div class="relative h-48 bg-gray-100 overflow-hidden shrink-0">
+                    {% if receta.imagen %}
+                    <img src="{{ receta.imagen.url }}" alt="{{ receta.nombre }}"
+                        class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
+                    {% else %}
+                    <div class="w-full h-full flex items-center justify-center bg-orange-50">
+                        <i class="fa-solid fa-utensils text-5xl text-orange-200"></i>
+                    </div>
+                    {% endif %}
+
+                    <!-- Dificultad badge -->
+                    <span class="absolute top-3 left-3 text-xs font-semibold px-2 py-1 rounded-full
+                        {% if receta.dificultad == 'facil' %}bg-green-100 text-green-700
+                        {% elif receta.dificultad == 'media' %}bg-yellow-100 text-yellow-700
+                        {% elif receta.dificultad == 'dificil' %}bg-orange-100 text-orange-700
+                        {% else %}bg-red-100 text-red-700{% endif %}">
+                        {{ receta.get_dificultad_display }}
+                    </span>
+
+                    <!-- Tiempo y porciones -->
+                    <div class="absolute bottom-0 left-0 right-0 p-3 bg-gradient-to-t from-black/70 to-transparent">
+                        <div class="flex items-center text-white text-sm gap-3">
+                            <span><i class="fa-regular fa-clock mr-1"></i>{{ receta.tiempo }}</span>
+                            <span><i class="fa-solid fa-utensils mr-1"></i>{{ receta.porciones }} porc.</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Contenido -->
+                <div class="p-4 flex flex-col flex-1">
+                    <div class="flex justify-between items-start mb-1 gap-2">
+                        <h3 class="font-bold text-lg text-gray-900 group-hover:text-orange-500 transition-colors leading-tight">
+                            {{ receta.nombre }}
+                        </h3>
+                    </div>
+
+                    <!-- Autor y fecha -->
+                    <p class="text-xs text-gray-400 mb-3">
+                        Por <span class="font-medium text-gray-500">{{ receta.autor.username }}</span>
+                        · {{ receta.fecha_creacion|date:"d M Y" }}
+                    </p>
+
+                    <!-- Notas (preview) -->
+                    {% if receta.notas %}
+                    <p class="text-gray-600 text-sm mb-3 line-clamp-2">{{ receta.notas }}</p>
+                    {% endif %}
+
+                    <!-- Etiquetas -->
+                    {% with etiquetas=receta.etiquetas.all %}
+                    {% if etiquetas %}
+                    <div class="flex flex-wrap gap-1.5 mt-auto pt-3 border-t">
+                        {% for etiqueta in etiquetas %}
+                        <span class="text-xs px-2.5 py-1 rounded-full"
+                              style="{{ etiqueta.get_badge_style }}">
+                            {{ etiqueta.nombre }}
+                        </span>
+                        {% endfor %}
+                    </div>
+                    {% elif receta.categorias.all %}
+                    <div class="flex flex-wrap gap-1.5 mt-auto pt-3 border-t">
+                        {% for cat in receta.categorias.all %}
+                        <span class="text-xs px-2.5 py-1 rounded-full bg-orange-100 text-orange-600">
+                            {{ cat.nombre }}
+                        </span>
+                        {% endfor %}
+                    </div>
+                    {% endif %}
+                    {% endwith %}
+                </div>
+
+                <!-- Ingredientes count -->
+                <div class="px-4 pb-4 pt-0">
+                    <div class="flex items-center justify-between text-xs text-gray-400 mb-3">
+                        <span><i class="fa-solid fa-list-check mr-1"></i>{{ receta.ingredientes.count }} ingrediente{{ receta.ingredientes.count|pluralize }}</span>
+                        <span><i class="fa-solid fa-list-ol mr-1"></i>{{ receta.pasos.count }} paso{{ receta.pasos.count|pluralize }}</span>
+                    </div>
+                </div>
+            </article>
+            {% endfor %}
+        </div>
+
+        {% else %}
+        <!-- Estado vacío -->
+        <div class="border-2 border-dashed border-gray-300 rounded-xl p-12 text-center my-8">
+            <div class="w-20 h-20 bg-orange-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                <i class="fa-solid fa-bowl-food text-orange-400 text-3xl"></i>
+            </div>
+            {% if q or dificultad %}
+            <h3 class="text-xl font-semibold text-gray-800 mb-2">No se encontraron recetas</h3>
+            <p class="text-gray-500 max-w-md mx-auto mb-6">
+                Probá con otros términos de búsqueda o limpiá los filtros.
+            </p>
+            <a href="{% url 'explorar' %}"
+                class="inline-flex items-center px-5 py-2.5 bg-orange-500 text-white rounded-lg hover:bg-orange-600 transition-colors">
+                <i class="fa-solid fa-rotate-left mr-2"></i> Limpiar filtros
+            </a>
+            {% else %}
+            <h3 class="text-xl font-semibold text-gray-800 mb-2">Todavía no hay recetas</h3>
+            <p class="text-gray-500 max-w-md mx-auto mb-6">
+                ¡Sé el primero en compartir una receta con la comunidad!
+            </p>
+            <a href="{% url 'recipes' %}"
+                class="inline-flex items-center px-5 py-2.5 bg-orange-500 text-white rounded-lg hover:bg-orange-600 transition-colors">
+                <i class="fa-solid fa-plus mr-2"></i> Crear la primera receta
+            </a>
+            {% endif %}
+        </div>
+        {% endif %}
+
+    </div>
+</section>
+{% endblock %}

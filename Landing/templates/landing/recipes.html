@@ -1,141 +1,196 @@
-{%extends 'base.html'%}
-{%block body%}
+{% extends 'base.html' %}
+{% block body %}
 <section class="bg-white md:m-2 md:rounded-lg flex-1 overflow-y-auto mt-16 md:mt-0">
     <div class="p-4 sm:p-6 md:p-8">
         <header class="border-b pb-4 mb-6">
             <h1 class="text-3xl font-bold text-orange-500">Crear Nueva Receta</h1>
-            <p class="text-gray-600">Comparte tu receta con la comunidad de Tia Luci</p>
+            <p class="text-gray-600">Comparte tu receta con la comunidad de GastryNomia</p>
         </header>
 
-        <form class="space-y-6 md:space-y-8 lg:space-y-10">
+        <form method="post" enctype="multipart/form-data" class="space-y-6 md:space-y-8 lg:space-y-10">
+            {% csrf_token %}
+
             <div class="flex flex-col md:flex-row gap-6 md:gap-8 lg:gap-10">
+
+                <!-- Imagen -->
                 <div class="w-full md:w-1/3 lg:w-1/4">
-                    <div
-                        class="border-2 border-dashed border-gray-300 rounded-lg p-6 text-center cursor-pointer hover:border-orange-400 transition-colors">
-                        <div class="flex flex-col items-center justify-center h-64 bg-gray-50 rounded-md">
-                            <i class="fa-solid fa-image text-5xl text-gray-300 mb-3"></i>
-                            <p class="text-gray-500 font-medium">Haz clic para subir una imagen</p>
-                            <p class="text-sm text-gray-400 mt-1">Recomendado: 800x600px</p>
+                    <label for="{{ form.imagen.id_for_label }}" class="block cursor-pointer">
+                        <div class="border-2 border-dashed border-gray-300 rounded-lg p-6 text-center hover:border-orange-400 transition-colors">
+                            <div id="image-preview-container" class="flex flex-col items-center justify-center h-64 bg-gray-50 rounded-md overflow-hidden">
+                                <i id="img-icon" class="fa-solid fa-image text-5xl text-gray-300 mb-3"></i>
+                                <p id="img-text" class="text-gray-500 font-medium">Haz clic para subir una imagen</p>
+                                <p id="img-hint" class="text-sm text-gray-400 mt-1">Recomendado: 800x600px</p>
+                                <img id="img-preview" class="hidden w-full h-full object-cover" src="" alt="Vista previa">
+                            </div>
                         </div>
-                        <input type="file" class="hidden" accept="image/*">
-                    </div>
+                    </label>
+                    <div class="hidden">{{ form.imagen }}</div>
+                    {% if form.imagen.errors %}
+                        <p class="text-red-500 text-sm mt-1">{{ form.imagen.errors|join:", " }}</p>
+                    {% endif %}
                 </div>
 
                 <div class="flex-1 space-y-4 md:space-y-6 lg:space-y-8">
+
+                    <!-- Nombre -->
                     <div>
-                        <label class="block text-gray-700 font-medium mb-1">Nombre de la receta</label>
-                        <input type="text"
-                            class="w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-orange-400 focus:border-transparent"
-                            placeholder="Ej: Tarta de manzana vegana">
+                        <label for="{{ form.nombre.id_for_label }}" class="block text-gray-700 font-medium mb-1">Nombre de la receta</label>
+                        {{ form.nombre }}
+                        {% if form.nombre.errors %}
+                            <p class="text-red-500 text-sm mt-1">{{ form.nombre.errors|join:", " }}</p>
+                        {% endif %}
                     </div>
 
+                    <!-- Tiempo / Porciones / Dificultad -->
                     <div class="grid grid-cols-3 gap-4 md:gap-6 lg:gap-8">
                         <div>
-                            <label class="block text-gray-700 font-medium mb-1">Tiempo</label>
+                            <label for="{{ form.tiempo.id_for_label }}" class="block text-gray-700 font-medium mb-1">Tiempo</label>
                             <div class="relative">
-                                <input type="text" class="w-full p-2 border border-gray-300 rounded-md pl-10"
-                                    placeholder="30 min">
-                                <i class="fa-regular fa-clock absolute left-3 top-3 text-gray-400"></i>
+                                {{ form.tiempo }}
+                                <i class="fa-regular fa-clock absolute left-3 top-3 text-gray-400 pointer-events-none"></i>
                             </div>
+                            {% if form.tiempo.errors %}
+                                <p class="text-red-500 text-sm mt-1">{{ form.tiempo.errors|join:", " }}</p>
+                            {% endif %}
                         </div>
                         <div>
-                            <label class="block text-gray-700 font-medium mb-1">Porciones</label>
+                            <label for="{{ form.porciones.id_for_label }}" class="block text-gray-700 font-medium mb-1">Porciones</label>
                             <div class="relative">
-                                <input type="text" class="w-full p-2 border border-gray-300 rounded-md pl-10"
-                                    placeholder="4">
-                                <i class="fa-solid fa-utensils absolute left-3 top-3 text-gray-400"></i>
+                                {{ form.porciones }}
+                                <i class="fa-solid fa-utensils absolute left-3 top-3 text-gray-400 pointer-events-none"></i>
                             </div>
+                            {% if form.porciones.errors %}
+                                <p class="text-red-500 text-sm mt-1">{{ form.porciones.errors|join:", " }}</p>
+                            {% endif %}
                         </div>
                         <div>
-                            <label class="block text-gray-700 font-medium mb-1">Dificultad</label>
-                            <select class="w-full p-2 border border-gray-300 rounded-md">
-                                <option>Fácil</option>
-                                <option>Media</option>
-                                <option>Difícil</option>
-                                <option>Extrema</option>
-                            </select>
+                            <label for="{{ form.dificultad.id_for_label }}" class="block text-gray-700 font-medium mb-1">Dificultad</label>
+                            {{ form.dificultad }}
+                            {% if form.dificultad.errors %}
+                                <p class="text-red-500 text-sm mt-1">{{ form.dificultad.errors|join:", " }}</p>
+                            {% endif %}
                         </div>
                     </div>
 
+                    <!-- Categorías -->
                     <div>
-                        <label class="block text-gray-700 font-medium mb-1">Categoría</label>
-                        <div class="flex flex-wrap gap-2">
-                            <span
-                                class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-orange-100 text-orange-800">
-                                <i class="fa-solid fa-utensils mr-1"></i> Principal
-                                <button class="ml-2 text-orange-500 hover:text-orange-700">×</button>
-                            </span>
-                            <button class="text-orange-500 hover:text-orange-700 text-sm flex items-center">
-                                <i class="fa-solid fa-plus mr-1"></i> Añadir categoría
-                            </button>
+                        <label class="block text-gray-700 font-medium mb-2">Categoría</label>
+                        <div class="flex flex-wrap gap-3">
+                            {{ form.categorias }}
                         </div>
+                        {% if form.categorias.errors %}
+                            <p class="text-red-500 text-sm mt-1">{{ form.categorias.errors|join:", " }}</p>
+                        {% endif %}
+                    </div>
+
+                    <!-- Etiquetas -->
+                    <div>
+                        <label class="block text-gray-700 font-medium mb-2">Etiquetas</label>
+                        <p class="text-xs text-gray-400 mb-2">Hacé clic para seleccionar. Se muestran en la card de la receta.</p>
+                        <div class="flex flex-wrap gap-2">
+                            {% for etiqueta in etiquetas_disponibles %}
+                            <label class="cursor-pointer select-none">
+                                <input type="checkbox"
+                                       name="etiquetas"
+                                       value="{{ etiqueta.pk }}"
+                                       class="hidden etiqueta-check"
+                                       data-style="{{ etiqueta.get_badge_style }}"
+                                       data-style-sel="{{ etiqueta.get_badge_style_selected }}"
+                                       {% if etiqueta.pk in etiquetas_seleccionadas_ids %}checked{% endif %}>
+                                <span class="text-xs px-2.5 py-1 rounded-full border border-transparent transition-all"
+                                      style="{{ etiqueta.get_badge_style }}">
+                                    {{ etiqueta.nombre }}
+                                </span>
+                            </label>
+                            {% empty %}
+                            <p class="text-sm text-gray-400 italic">No hay etiquetas disponibles. Pedile a un administrador que las cree.</p>
+                            {% endfor %}
+                        </div>
+                        {% if form.etiquetas.errors %}
+                            <p class="text-red-500 text-sm mt-1">{{ form.etiquetas.errors|join:", " }}</p>
+                        {% endif %}
                     </div>
                 </div>
             </div>
 
+            <!-- Ingredientes -->
             <div class="bg-gray-50 p-4 rounded-lg">
                 <h2 class="text-xl font-bold text-gray-800 mb-4 flex items-center">
                     <i class="fa-solid fa-list-check text-orange-500 mr-2"></i>
                     Ingredientes
                 </h2>
-                <div class="space-y-3 mb-4">
-                    <div class="flex gap-2">
-                        <input type="text" class="flex-1 p-2 border border-gray-300 rounded-md"
-                            placeholder="Ej: 2 tazas de harina">
-                        <button type="button" class="px-3 bg-orange-500 text-white rounded-md hover:bg-orange-600">
-                            <i class="fa-solid fa-plus"></i>
-                        </button>
+                {{ ingrediente_formset.management_form }}
+                <div id="ingredientes-container" class="space-y-3 mb-4">
+                    {% for ing_form in ingrediente_formset %}
+                    <div class="ingrediente-form flex gap-2 items-center">
+                        {{ ing_form.descripcion }}
+                        {% if ing_form.instance.pk %}
+                            <label class="flex items-center gap-1 text-red-400 text-sm cursor-pointer whitespace-nowrap">
+                                {{ ing_form.DELETE }} Eliminar
+                            </label>
+                        {% else %}
+                            <button type="button" onclick="removeForm(this, 'ingrediente-form')"
+                                class="px-3 py-2 bg-red-400 text-white rounded-md hover:bg-red-500 flex-shrink-0">
+                                <i class="fa-solid fa-trash"></i>
+                            </button>
+                        {% endif %}
+                        {% for hidden in ing_form.hidden_fields %}{{ hidden }}{% endfor %}
                     </div>
-                    <div class="bg-white p-3 rounded-md border flex justify-between items-center">
-                        <span>1 cucharada de aceite de oliva</span>
-                        <button class="text-red-400 hover:text-red-600">
-                            <i class="fa-solid fa-trash"></i>
-                        </button>
-                    </div>
-                    <div class="bg-white p-3 rounded-md border flex justify-between items-center">
-                        <span>3 dientes de ajo picados</span>
-                        <button class="text-red-400 hover:text-red-600">
-                            <i class="fa-solid fa-trash"></i>
-                        </button>
-                    </div>
+                    {% endfor %}
                 </div>
+                <button type="button" onclick="addIngrediente()"
+                    class="text-orange-500 hover:text-orange-700 text-sm flex items-center">
+                    <i class="fa-solid fa-plus mr-1"></i> Añadir ingrediente
+                </button>
             </div>
 
+            <!-- Instrucciones -->
             <div class="bg-gray-50 p-4 rounded-lg">
                 <h2 class="text-xl font-bold text-gray-800 mb-4 flex items-center">
                     <i class="fa-solid fa-list-ol text-orange-500 mr-2"></i>
                     Instrucciones
                 </h2>
-                <div class="space-y-4">
-                    <div class="flex gap-3">
-                        <span
-                            class="bg-orange-500 text-white rounded-full w-6 h-6 flex items-center justify-center flex-shrink-0">1</span>
-                        <textarea class="flex-1 p-2 border border-gray-300 rounded-md h-20"
-                            placeholder="Describe el primer paso de la receta"></textarea>
+                {{ paso_formset.management_form }}
+                <div id="pasos-container" class="space-y-4">
+                    {% for paso_form in paso_formset %}
+                    <div class="paso-form flex gap-3 items-start">
+                        <span class="paso-numero bg-orange-500 text-white rounded-full w-6 h-6 flex items-center justify-center flex-shrink-0 mt-2">{{ forloop.counter }}</span>
+                        {{ paso_form.descripcion }}
+                        {% if paso_form.instance.pk %}
+                            <label class="flex items-center gap-1 text-red-400 text-sm cursor-pointer whitespace-nowrap mt-2">
+                                {{ paso_form.DELETE }} Eliminar
+                            </label>
+                        {% else %}
+                            <button type="button" onclick="removeForm(this, 'paso-form')"
+                                class="px-3 py-2 bg-red-400 text-white rounded-md hover:bg-red-500 flex-shrink-0 mt-1">
+                                <i class="fa-solid fa-trash"></i>
+                            </button>
+                        {% endif %}
+                        {% for hidden in paso_form.hidden_fields %}{{ hidden }}{% endfor %}
                     </div>
-                    <div class="flex gap-3">
-                        <span
-                            class="bg-orange-500 text-white rounded-full w-6 h-6 flex items-center justify-center flex-shrink-0">2</span>
-                        <textarea class="flex-1 p-2 border border-gray-300 rounded-md h-20"
-                            placeholder="Describe el segundo paso"></textarea>
-                    </div>
-                    <button type="button" class="text-orange-500 hover:text-orange-700 text-sm flex items-center">
-                        <i class="fa-solid fa-plus mr-1"></i> Añadir paso
-                    </button>
+                    {% endfor %}
                 </div>
+                <button type="button" onclick="addPaso()"
+                    class="mt-4 text-orange-500 hover:text-orange-700 text-sm flex items-center">
+                    <i class="fa-solid fa-plus mr-1"></i> Añadir paso
+                </button>
             </div>
 
+            <!-- Notas -->
             <div>
-                <label class="block text-gray-700 font-medium mb-1">Notas adicionales</label>
-                <textarea class="w-full p-3 border border-gray-300 rounded-md h-24"
-                    placeholder="¿Algún consejo, variante o información nutricional que quieras compartir?"></textarea>
+                <label for="{{ form.notas.id_for_label }}" class="block text-gray-700 font-medium mb-1">Notas adicionales</label>
+                {{ form.notas }}
+                {% if form.notas.errors %}
+                    <p class="text-red-500 text-sm mt-1">{{ form.notas.errors|join:", " }}</p>
+                {% endif %}
             </div>
 
+            <!-- Botones -->
             <div class="flex justify-end gap-3 pt-4 border-t">
-                <button type="button"
+                <a href="{% url 'landing' %}"
                     class="px-4 py-2 border border-gray-300 rounded-md text-gray-700 hover:bg-gray-50">
                     Descartar
-                </button>
+                </a>
                 <button type="submit"
                     class="px-6 py-2 bg-orange-500 text-white rounded-md hover:bg-orange-600 flex items-center">
                     <i class="fa-solid fa-upload mr-2"></i>
@@ -143,5 +198,91 @@
                 </button>
             </div>
         </form>
+    </div>
 </section>
-{%endblock%}
+
+<script>
+// Toggle visual de etiquetas
+document.querySelectorAll('.etiqueta-check').forEach(function (cb) {
+    var span = cb.nextElementSibling;
+    function sync() {
+        span.style.cssText = cb.checked ? cb.dataset.styleSel : cb.dataset.style;
+    }
+    cb.addEventListener('change', sync);
+    sync();
+});
+
+document.getElementById('id_imagen').addEventListener('change', function (e) {
+    const file = e.target.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = function (e) {
+        document.getElementById('img-preview').src = e.target.result;
+        document.getElementById('img-preview').classList.remove('hidden');
+        document.getElementById('img-icon').classList.add('hidden');
+        document.getElementById('img-text').classList.add('hidden');
+        document.getElementById('img-hint').classList.add('hidden');
+    };
+    reader.readAsDataURL(file);
+});
+
+function getTotalForms(prefix) {
+    return parseInt(document.getElementById('id_' + prefix + '-TOTAL_FORMS').value);
+}
+
+function setTotalForms(prefix, val) {
+    document.getElementById('id_' + prefix + '-TOTAL_FORMS').value = val;
+}
+
+function addIngrediente() {
+    const container = document.getElementById('ingredientes-container');
+    const count = getTotalForms('ingredientes');
+    const div = document.createElement('div');
+    div.className = 'ingrediente-form flex gap-2 items-center';
+    div.innerHTML =
+        '<input type="text" name="ingredientes-' + count + '-descripcion"' +
+        ' id="id_ingredientes-' + count + '-descripcion"' +
+        ' class="flex-1 p-2 border border-gray-300 rounded-md w-full"' +
+        ' placeholder="Ej: 2 tazas de harina">' +
+        '<input type="hidden" name="ingredientes-' + count + '-id" id="id_ingredientes-' + count + '-id">' +
+        '<button type="button" onclick="removeForm(this, \'ingrediente-form\')"' +
+        ' class="px-3 py-2 bg-red-400 text-white rounded-md hover:bg-red-500 flex-shrink-0">' +
+        '<i class="fa-solid fa-trash"></i></button>';
+    container.appendChild(div);
+    setTotalForms('ingredientes', count + 1);
+}
+
+function addPaso() {
+    const container = document.getElementById('pasos-container');
+    const count = getTotalForms('pasos');
+    const stepNum = container.querySelectorAll('.paso-form').length + 1;
+    const div = document.createElement('div');
+    div.className = 'paso-form flex gap-3 items-start';
+    div.innerHTML =
+        '<span class="paso-numero bg-orange-500 text-white rounded-full w-6 h-6 flex items-center justify-center flex-shrink-0 mt-2">' + stepNum + '</span>' +
+        '<textarea name="pasos-' + count + '-descripcion"' +
+        ' id="id_pasos-' + count + '-descripcion"' +
+        ' class="flex-1 p-2 border border-gray-300 rounded-md h-20 w-full"' +
+        ' placeholder="Describe este paso de la receta"></textarea>' +
+        '<input type="hidden" name="pasos-' + count + '-id" id="id_pasos-' + count + '-id">' +
+        '<button type="button" onclick="removeForm(this, \'paso-form\')"' +
+        ' class="px-3 py-2 bg-red-400 text-white rounded-md hover:bg-red-500 flex-shrink-0 mt-1">' +
+        '<i class="fa-solid fa-trash"></i></button>';
+    container.appendChild(div);
+    setTotalForms('pasos', count + 1);
+    updatePasoNumbers();
+}
+
+function removeForm(btn, className) {
+    btn.closest('.' + className).remove();
+    if (className === 'paso-form') updatePasoNumbers();
+}
+
+function updatePasoNumbers() {
+    document.querySelectorAll('.paso-form').forEach(function (div, i) {
+        const num = div.querySelector('.paso-numero');
+        if (num) num.textContent = i + 1;
+    });
+}
+</script>
+{% endblock %}

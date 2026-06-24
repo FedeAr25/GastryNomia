@@ -35,10 +35,10 @@
                         class="flex items-center text-gray-200 hover:bg-orange-500 rounded-lg p-3 transition-colors"><i
                             class="fa-solid fa-trophy w-6 text-center"></i><span
                             class="ml-3 text-sm md:text-base">Desafíos</span></a></li>
-                <li><a href="{%url  'collection'%}"
+                <li><a href="{% url 'explorar' %}"
                         class="flex items-center text-gray-200 hover:bg-orange-500 rounded-lg p-3 transition-colors"><i
-                            class="fa-solid fa-heart w-6 text-center"></i><span class="ml-3 text-sm md:text-base">Tu
-                            Colección</span></a></li>
+                            class="fa-solid fa-bowl-food w-6 text-center"></i><span
+                            class="ml-3 text-sm md:text-base">Explorar</span></a></li>
                 <li><a href="{% url 'recipes'%}"
                         class="flex items-center p-3 rounded-lg transition-colors hover:bg-orange-500 text-gray-200 hover:text-white"><i
                             class="fa-solid fa-utensils w-6 text-center"></i><span
@@ -75,7 +75,7 @@
                 </a>
 
                 {%endif%}
-                <a href="#"
+                <a href="{% url 'recipes' %}"
                     class="px-6 py-3 bg-orange-600 text-white font-medium rounded-lg shadow-lg hover:bg-orange-700 transition duration-300 transform hover:-translate-y-0.5">
                     Crea tu Receta
                 </a>
