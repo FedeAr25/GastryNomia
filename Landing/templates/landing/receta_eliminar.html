@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+{% block body %}
+<section class="bg-white md:m-2 md:rounded-lg flex-1 overflow-y-auto mt-16 md:mt-0">
+    <div class="p-4 sm:p-6 md:p-8 flex items-center justify-center min-h-96">
+        <div class="max-w-md w-full">
+
+            <div class="text-center mb-8">
+                <div class="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <i class="fa-solid fa-triangle-exclamation text-red-500 text-2xl"></i>
+                </div>
+                <h1 class="text-2xl font-bold text-gray-800 mb-2">Eliminar receta</h1>
+                <p class="text-gray-600">
+                    ¿Estás seguro de que querés eliminar
+                    <span class="font-semibold text-gray-800">{{ receta.nombre }}</span>?
+                </p>
+                <p class="text-sm text-red-500 mt-2">Esta acción no se puede deshacer.</p>
+            </div>
+
+            {% if receta.imagen %}
+            <div class="rounded-xl overflow-hidden h-40 mb-6">
+                <img src="{{ receta.imagen.url }}" alt="{{ receta.nombre }}"
+                    class="w-full h-full object-cover opacity-60">
+            </div>
+            {% endif %}
+
+            <div class="bg-gray-50 rounded-lg p-4 mb-6 text-sm text-gray-600 space-y-1">
+                <p><i class="fa-regular fa-clock text-orange-400 mr-2"></i>{{ receta.tiempo }} · {{ receta.porciones }} porciones</p>
+                <p><i class="fa-solid fa-list-check text-orange-400 mr-2"></i>{{ receta.ingredientes.count }} ingrediente{{ receta.ingredientes.count|pluralize }}</p>
+                <p><i class="fa-solid fa-list-ol text-orange-400 mr-2"></i>{{ receta.pasos.count }} paso{{ receta.pasos.count|pluralize }}</p>
+            </div>
+
+            <div class="flex gap-3">
+                <a href="{% url 'receta_detalle' receta.pk %}"
+                    class="flex-1 py-3 border border-gray-300 rounded-lg text-gray-700 font-medium hover:bg-gray-50 transition-colors text-center">
+                    Cancelar
+                </a>
+                <form method="post" class="flex-1">
+                    {% csrf_token %}
+                    <button type="submit"
+                        class="w-full py-3 bg-red-500 text-white rounded-lg font-medium hover:bg-red-600 transition-colors flex items-center justify-center gap-2">
+                        <i class="fa-solid fa-trash"></i> Sí, eliminar
+                    </button>
+                </form>
+            </div>
+
+        </div>
+    </div>
+</section>
+{% endblock %}

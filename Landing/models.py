@@ -67,6 +67,11 @@ class Receta(models.Model):
     autor = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='recetas')
     fecha_creacion = models.DateTimeField(auto_now_add=True)
 
+    class Meta:
+        permissions = [
+            ('can_manage_all_recetas', 'Puede gestionar cualquier receta'),
+        ]
+
     def __str__(self):
         return self.nombre
 

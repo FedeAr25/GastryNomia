@@ -148,11 +148,29 @@
                     {% endwith %}
                 </div>
 
-                <!-- Ingredientes count -->
+                <!-- Ingredientes count + acciones -->
                 <div class="px-4 pb-4 pt-0">
                     <div class="flex items-center justify-between text-xs text-gray-400 mb-3">
                         <span><i class="fa-solid fa-list-check mr-1"></i>{{ receta.ingredientes.count }} ingrediente{{ receta.ingredientes.count|pluralize }}</span>
                         <span><i class="fa-solid fa-list-ol mr-1"></i>{{ receta.pasos.count }} paso{{ receta.pasos.count|pluralize }}</span>
+                    </div>
+                    <div class="flex gap-2">
+                        <a href="{% url 'receta_detalle' receta.pk %}"
+                            class="flex-1 py-2 border border-orange-400 text-orange-500 rounded-lg text-sm font-medium hover:bg-orange-50 transition-colors flex items-center justify-center gap-1">
+                            <i class="fa-solid fa-book-open text-xs"></i> Ver receta
+                        </a>
+                        {% if user == receta.autor or perms.Landing.can_manage_all_recetas %}
+                        <a href="{% url 'receta_editar' receta.pk %}"
+                            class="px-3 py-2 bg-orange-500 text-white rounded-lg text-sm hover:bg-orange-600 transition-colors flex items-center justify-center"
+                            title="Editar">
+                            <i class="fa-solid fa-pen text-xs"></i>
+                        </a>
+                        <a href="{% url 'receta_eliminar' receta.pk %}"
+                            class="px-3 py-2 bg-red-500 text-white rounded-lg text-sm hover:bg-red-600 transition-colors flex items-center justify-center"
+                            title="Eliminar">
+                            <i class="fa-solid fa-trash text-xs"></i>
+                        </a>
+                        {% endif %}
                     </div>
                 </div>
             </article>

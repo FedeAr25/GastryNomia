@@ -1,0 +1,148 @@
+{% extends 'base.html' %}
+{% block body %}
+<section class="bg-white md:m-2 md:rounded-lg flex-1 overflow-y-auto mt-16 md:mt-0">
+
+    <!-- Hero imagen -->
+    <div class="relative h-64 sm:h-80 bg-orange-50 overflow-hidden">
+        {% if receta.imagen %}
+        <img src="{{ receta.imagen.url }}" alt="{{ receta.nombre }}"
+            class="w-full h-full object-cover">
+        {% else %}
+        <div class="w-full h-full flex items-center justify-center">
+            <i class="fa-solid fa-utensils text-8xl text-orange-200"></i>
+        </div>
+        {% endif %}
+        <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+        <div class="absolute bottom-0 left-0 right-0 p-6">
+            <h1 class="text-2xl sm:text-4xl font-bold text-white drop-shadow">{{ receta.nombre }}</h1>
+            <p class="text-orange-200 text-sm mt-1">
+                Por <span class="font-semibold text-white">{{ receta.autor.username }}</span>
+                · {{ receta.fecha_creacion|date:"d M Y" }}
+            </p>
+        </div>
+    </div>
+
+    <div class="p-4 sm:p-6 md:p-8">
+
+        <!-- Botones de acción -->
+        <div class="flex flex-wrap items-center justify-between gap-3 mb-6">
+            <a href="{% url 'explorar' %}"
+                class="flex items-center gap-2 text-gray-500 hover:text-orange-500 transition-colors text-sm">
+                <i class="fa-solid fa-arrow-left"></i> Volver a explorar
+            </a>
+            {% if user == receta.autor or perms.Landing.can_manage_all_recetas %}
+            <div class="flex gap-2">
+                <a href="{% url 'receta_editar' receta.pk %}"
+                    class="px-4 py-2 bg-orange-500 text-white rounded-lg text-sm font-medium hover:bg-orange-600 transition-colors flex items-center gap-2">
+                    <i class="fa-solid fa-pen"></i> Editar
+                </a>
+                <a href="{% url 'receta_eliminar' receta.pk %}"
+                    class="px-4 py-2 bg-red-500 text-white rounded-lg text-sm font-medium hover:bg-red-600 transition-colors flex items-center gap-2">
+                    <i class="fa-solid fa-trash"></i> Eliminar
+                </a>
+            </div>
+            {% endif %}
+        </div>
+
+        <!-- Metadata: tiempo, porciones, dificultad -->
+        <div class="grid grid-cols-3 gap-4 mb-6 p-4 bg-orange-50 rounded-xl">
+            <div class="text-center">
+                <i class="fa-regular fa-clock text-orange-400 text-xl mb-1"></i>
+                <p class="text-xs text-gray-500">Tiempo</p>
+                <p class="font-semibold text-gray-800 text-sm">{{ receta.tiempo }}</p>
+            </div>
+            <div class="text-center">
+                <i class="fa-solid fa-utensils text-orange-400 text-xl mb-1"></i>
+                <p class="text-xs text-gray-500">Porciones</p>
+                <p class="font-semibold text-gray-800 text-sm">{{ receta.porciones }}</p>
+            </div>
+            <div class="text-center">
+                <i class="fa-solid fa-gauge text-orange-400 text-xl mb-1"></i>
+                <p class="text-xs text-gray-500">Dificultad</p>
+                <p class="font-semibold text-sm
+                    {% if receta.dificultad == 'facil' %}text-green-600
+                    {% elif receta.dificultad == 'media' %}text-yellow-600
+                    {% elif receta.dificultad == 'dificil' %}text-orange-600
+                    {% else %}text-red-600{% endif %}">
+                    {{ receta.get_dificultad_display }}
+                </p>
+            </div>
+        </div>
+
+        <!-- Etiquetas y categorías -->
+        {% with etiquetas=receta.etiquetas.all categorias=receta.categorias.all %}
+        {% if etiquetas or categorias %}
+        <div class="flex flex-wrap gap-2 mb-6">
+            {% for etiqueta in etiquetas %}
+            <span class="text-xs px-3 py-1 rounded-full font-medium"
+                  style="{{ etiqueta.get_badge_style }}">
+                {{ etiqueta.nombre }}
+            </span>
+            {% endfor %}
+            {% for cat in categorias %}
+            <span class="text-xs px-3 py-1 rounded-full font-medium bg-gray-100 text-gray-600">
+                <i class="fa-solid fa-tag mr-1"></i>{{ cat.nombre }}
+            </span>
+            {% endfor %}
+        </div>
+        {% endif %}
+        {% endwith %}
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+
+            <!-- Ingredientes -->
+            <div class="bg-gray-50 rounded-xl p-5">
+                <h2 class="text-lg font-bold text-gray-800 mb-4 flex items-center gap-2">
+                    <i class="fa-solid fa-list-check text-orange-500"></i>
+                    Ingredientes
+                    <span class="text-sm font-normal text-gray-400">({{ receta.ingredientes.count }})</span>
+                </h2>
+                {% if receta.ingredientes.all %}
+                <ul class="space-y-2">
+                    {% for ing in receta.ingredientes.all %}
+                    <li class="flex items-start gap-2 text-gray-700 text-sm">
+                        <span class="w-2 h-2 bg-orange-400 rounded-full mt-1.5 flex-shrink-0"></span>
+                        {{ ing.descripcion }}
+                    </li>
+                    {% endfor %}
+                </ul>
+                {% else %}
+                <p class="text-gray-400 text-sm italic">Sin ingredientes cargados.</p>
+                {% endif %}
+            </div>
+
+            <!-- Notas -->
+            {% if receta.notas %}
+            <div class="bg-orange-50 rounded-xl p-5 border-l-4 border-orange-400">
+                <h2 class="text-lg font-bold text-gray-800 mb-3 flex items-center gap-2">
+                    <i class="fa-solid fa-lightbulb text-orange-500"></i>
+                    Notas del autor
+                </h2>
+                <p class="text-gray-700 text-sm leading-relaxed">{{ receta.notas }}</p>
+            </div>
+            {% endif %}
+        </div>
+
+        <!-- Instrucciones -->
+        {% if receta.pasos.all %}
+        <div class="mt-8">
+            <h2 class="text-lg font-bold text-gray-800 mb-4 flex items-center gap-2">
+                <i class="fa-solid fa-list-ol text-orange-500"></i>
+                Instrucciones
+            </h2>
+            <ol class="space-y-4">
+                {% for paso in receta.pasos.all %}
+                <li class="flex gap-4">
+                    <span class="bg-orange-500 text-white rounded-full w-7 h-7 flex items-center justify-center flex-shrink-0 font-bold text-sm mt-0.5">
+                        {{ paso.numero }}
+                    </span>
+                    <p class="text-gray-700 leading-relaxed pt-0.5">{{ paso.descripcion }}</p>
+                </li>
+                {% endfor %}
+            </ol>
+        </div>
+        {% endif %}
+
+    </div>
+</section>
+{% endblock %}

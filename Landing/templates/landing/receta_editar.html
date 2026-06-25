@@ -1,0 +1,282 @@
+{% extends 'base.html' %}
+{% block body %}
+<section class="bg-white md:m-2 md:rounded-lg flex-1 overflow-y-auto mt-16 md:mt-0">
+    <div class="p-4 sm:p-6 md:p-8">
+        <header class="border-b pb-4 mb-6 flex items-center justify-between">
+            <div>
+                <h1 class="text-3xl font-bold text-orange-500">Editar Receta</h1>
+                <p class="text-gray-500 text-sm mt-1">{{ receta.nombre }}</p>
+            </div>
+            <a href="{% url 'receta_detalle' receta.pk %}"
+                class="text-gray-500 hover:text-orange-500 transition-colors flex items-center gap-1 text-sm">
+                <i class="fa-solid fa-arrow-left"></i> Volver
+            </a>
+        </header>
+
+        <form method="post" enctype="multipart/form-data" class="space-y-6 md:space-y-8 lg:space-y-10">
+            {% csrf_token %}
+
+            <div class="flex flex-col md:flex-row gap-6 md:gap-8 lg:gap-10">
+
+                <!-- Imagen -->
+                <div class="w-full md:w-1/3 lg:w-1/4">
+                    <label for="{{ form.imagen.id_for_label }}" class="block cursor-pointer">
+                        <div class="border-2 border-dashed border-gray-300 rounded-lg p-6 text-center hover:border-orange-400 transition-colors">
+                            <div id="image-preview-container" class="flex flex-col items-center justify-center h-64 bg-gray-50 rounded-md overflow-hidden">
+                                {% if receta.imagen %}
+                                <img id="img-preview" class="w-full h-full object-cover" src="{{ receta.imagen.url }}" alt="Imagen actual">
+                                <i id="img-icon" class="hidden fa-solid fa-image text-5xl text-gray-300 mb-3"></i>
+                                <p id="img-text" class="hidden text-gray-500 font-medium">Haz clic para cambiar la imagen</p>
+                                <p id="img-hint" class="hidden text-sm text-gray-400 mt-1">Recomendado: 800x600px</p>
+                                {% else %}
+                                <i id="img-icon" class="fa-solid fa-image text-5xl text-gray-300 mb-3"></i>
+                                <p id="img-text" class="text-gray-500 font-medium">Haz clic para subir una imagen</p>
+                                <p id="img-hint" class="text-sm text-gray-400 mt-1">Recomendado: 800x600px</p>
+                                <img id="img-preview" class="hidden w-full h-full object-cover" src="" alt="Vista previa">
+                                {% endif %}
+                            </div>
+                        </div>
+                    </label>
+                    <div class="hidden">{{ form.imagen }}</div>
+                    {% if form.imagen.errors %}
+                        <p class="text-red-500 text-sm mt-1">{{ form.imagen.errors|join:", " }}</p>
+                    {% endif %}
+                </div>
+
+                <div class="flex-1 space-y-4 md:space-y-6 lg:space-y-8">
+
+                    <!-- Nombre -->
+                    <div>
+                        <label for="{{ form.nombre.id_for_label }}" class="block text-gray-700 font-medium mb-1">Nombre de la receta</label>
+                        {{ form.nombre }}
+                        {% if form.nombre.errors %}
+                            <p class="text-red-500 text-sm mt-1">{{ form.nombre.errors|join:", " }}</p>
+                        {% endif %}
+                    </div>
+
+                    <!-- Tiempo / Porciones / Dificultad -->
+                    <div class="grid grid-cols-3 gap-4 md:gap-6 lg:gap-8">
+                        <div>
+                            <label for="{{ form.tiempo.id_for_label }}" class="block text-gray-700 font-medium mb-1">Tiempo</label>
+                            <div class="relative">
+                                {{ form.tiempo }}
+                                <i class="fa-regular fa-clock absolute left-3 top-3 text-gray-400 pointer-events-none"></i>
+                            </div>
+                            {% if form.tiempo.errors %}
+                                <p class="text-red-500 text-sm mt-1">{{ form.tiempo.errors|join:", " }}</p>
+                            {% endif %}
+                        </div>
+                        <div>
+                            <label for="{{ form.porciones.id_for_label }}" class="block text-gray-700 font-medium mb-1">Porciones</label>
+                            <div class="relative">
+                                {{ form.porciones }}
+                                <i class="fa-solid fa-utensils absolute left-3 top-3 text-gray-400 pointer-events-none"></i>
+                            </div>
+                            {% if form.porciones.errors %}
+                                <p class="text-red-500 text-sm mt-1">{{ form.porciones.errors|join:", " }}</p>
+                            {% endif %}
+                        </div>
+                        <div>
+                            <label for="{{ form.dificultad.id_for_label }}" class="block text-gray-700 font-medium mb-1">Dificultad</label>
+                            {{ form.dificultad }}
+                            {% if form.dificultad.errors %}
+                                <p class="text-red-500 text-sm mt-1">{{ form.dificultad.errors|join:", " }}</p>
+                            {% endif %}
+                        </div>
+                    </div>
+
+                    <!-- Categorías -->
+                    <div>
+                        <label class="block text-gray-700 font-medium mb-2">Categoría</label>
+                        <div class="flex flex-wrap gap-3">
+                            {{ form.categorias }}
+                        </div>
+                        {% if form.categorias.errors %}
+                            <p class="text-red-500 text-sm mt-1">{{ form.categorias.errors|join:", " }}</p>
+                        {% endif %}
+                    </div>
+
+                    <!-- Etiquetas -->
+                    <div>
+                        <label class="block text-gray-700 font-medium mb-2">Etiquetas</label>
+                        <p class="text-xs text-gray-400 mb-2">Hacé clic para seleccionar.</p>
+                        <div class="flex flex-wrap gap-2">
+                            {% for etiqueta in etiquetas_disponibles %}
+                            <label class="cursor-pointer select-none">
+                                <input type="checkbox"
+                                       name="etiquetas"
+                                       value="{{ etiqueta.pk }}"
+                                       class="hidden etiqueta-check"
+                                       data-style="{{ etiqueta.get_badge_style }}"
+                                       data-style-sel="{{ etiqueta.get_badge_style_selected }}"
+                                       {% if etiqueta.pk in etiquetas_seleccionadas_ids %}checked{% endif %}>
+                                <span class="text-xs px-2.5 py-1 rounded-full border border-transparent transition-all"
+                                      style="{{ etiqueta.get_badge_style }}">
+                                    {{ etiqueta.nombre }}
+                                </span>
+                            </label>
+                            {% empty %}
+                            <p class="text-sm text-gray-400 italic">No hay etiquetas disponibles.</p>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Ingredientes -->
+            <div class="bg-gray-50 p-4 rounded-lg">
+                <h2 class="text-xl font-bold text-gray-800 mb-4 flex items-center">
+                    <i class="fa-solid fa-list-check text-orange-500 mr-2"></i>
+                    Ingredientes
+                </h2>
+                {{ ingrediente_formset.management_form }}
+                <div id="ingredientes-container" class="space-y-3 mb-4">
+                    {% for ing_form in ingrediente_formset %}
+                    <div class="ingrediente-form flex gap-2 items-center">
+                        {{ ing_form.descripcion }}
+                        {% if ing_form.instance.pk %}
+                            <label class="flex items-center gap-1 text-red-400 text-sm cursor-pointer whitespace-nowrap">
+                                {{ ing_form.DELETE }} Eliminar
+                            </label>
+                        {% else %}
+                            <button type="button" onclick="removeForm(this, 'ingrediente-form')"
+                                class="px-3 py-2 bg-red-400 text-white rounded-md hover:bg-red-500 flex-shrink-0">
+                                <i class="fa-solid fa-trash"></i>
+                            </button>
+                        {% endif %}
+                        {% for hidden in ing_form.hidden_fields %}{{ hidden }}{% endfor %}
+                    </div>
+                    {% endfor %}
+                </div>
+                <button type="button" onclick="addIngrediente()"
+                    class="text-orange-500 hover:text-orange-700 text-sm flex items-center">
+                    <i class="fa-solid fa-plus mr-1"></i> Añadir ingrediente
+                </button>
+            </div>
+
+            <!-- Instrucciones -->
+            <div class="bg-gray-50 p-4 rounded-lg">
+                <h2 class="text-xl font-bold text-gray-800 mb-4 flex items-center">
+                    <i class="fa-solid fa-list-ol text-orange-500 mr-2"></i>
+                    Instrucciones
+                </h2>
+                {{ paso_formset.management_form }}
+                <div id="pasos-container" class="space-y-4">
+                    {% for paso_form in paso_formset %}
+                    <div class="paso-form flex gap-3 items-start">
+                        <span class="paso-numero bg-orange-500 text-white rounded-full w-6 h-6 flex items-center justify-center flex-shrink-0 mt-2">{{ forloop.counter }}</span>
+                        {{ paso_form.descripcion }}
+                        {% if paso_form.instance.pk %}
+                            <label class="flex items-center gap-1 text-red-400 text-sm cursor-pointer whitespace-nowrap mt-2">
+                                {{ paso_form.DELETE }} Eliminar
+                            </label>
+                        {% else %}
+                            <button type="button" onclick="removeForm(this, 'paso-form')"
+                                class="px-3 py-2 bg-red-400 text-white rounded-md hover:bg-red-500 flex-shrink-0 mt-1">
+                                <i class="fa-solid fa-trash"></i>
+                            </button>
+                        {% endif %}
+                        {% for hidden in paso_form.hidden_fields %}{{ hidden }}{% endfor %}
+                    </div>
+                    {% endfor %}
+                </div>
+                <button type="button" onclick="addPaso()"
+                    class="mt-4 text-orange-500 hover:text-orange-700 text-sm flex items-center">
+                    <i class="fa-solid fa-plus mr-1"></i> Añadir paso
+                </button>
+            </div>
+
+            <!-- Notas -->
+            <div>
+                <label for="{{ form.notas.id_for_label }}" class="block text-gray-700 font-medium mb-1">Notas adicionales</label>
+                {{ form.notas }}
+                {% if form.notas.errors %}
+                    <p class="text-red-500 text-sm mt-1">{{ form.notas.errors|join:", " }}</p>
+                {% endif %}
+            </div>
+
+            <!-- Botones -->
+            <div class="flex justify-end gap-3 pt-4 border-t">
+                <a href="{% url 'receta_detalle' receta.pk %}"
+                    class="px-4 py-2 border border-gray-300 rounded-md text-gray-700 hover:bg-gray-50">
+                    Cancelar
+                </a>
+                <button type="submit"
+                    class="px-6 py-2 bg-orange-500 text-white rounded-md hover:bg-orange-600 flex items-center">
+                    <i class="fa-solid fa-floppy-disk mr-2"></i>
+                    Guardar cambios
+                </button>
+            </div>
+        </form>
+    </div>
+</section>
+
+<script>
+document.querySelectorAll('.etiqueta-check').forEach(function (cb) {
+    var span = cb.nextElementSibling;
+    function sync() { span.style.cssText = cb.checked ? cb.dataset.styleSel : cb.dataset.style; }
+    cb.addEventListener('change', sync);
+    sync();
+});
+
+var imgInput = document.getElementById('id_imagen');
+if (imgInput) {
+    imgInput.addEventListener('change', function (e) {
+        const file = e.target.files[0];
+        if (!file) return;
+        const reader = new FileReader();
+        reader.onload = function (e) {
+            var prev = document.getElementById('img-preview');
+            prev.src = e.target.result;
+            prev.classList.remove('hidden');
+            document.getElementById('img-icon').classList.add('hidden');
+            document.getElementById('img-text').classList.add('hidden');
+            document.getElementById('img-hint').classList.add('hidden');
+        };
+        reader.readAsDataURL(file);
+    });
+}
+
+function getTotalForms(prefix) { return parseInt(document.getElementById('id_' + prefix + '-TOTAL_FORMS').value); }
+function setTotalForms(prefix, val) { document.getElementById('id_' + prefix + '-TOTAL_FORMS').value = val; }
+
+function addIngrediente() {
+    const container = document.getElementById('ingredientes-container');
+    const count = getTotalForms('ingredientes');
+    const div = document.createElement('div');
+    div.className = 'ingrediente-form flex gap-2 items-center';
+    div.innerHTML = '<input type="text" name="ingredientes-' + count + '-descripcion" id="id_ingredientes-' + count + '-descripcion" class="flex-1 p-2 border border-gray-300 rounded-md w-full" placeholder="Ej: 2 tazas de harina">' +
+        '<input type="hidden" name="ingredientes-' + count + '-id" id="id_ingredientes-' + count + '-id">' +
+        '<button type="button" onclick="removeForm(this, \'ingrediente-form\')" class="px-3 py-2 bg-red-400 text-white rounded-md hover:bg-red-500 flex-shrink-0"><i class="fa-solid fa-trash"></i></button>';
+    container.appendChild(div);
+    setTotalForms('ingredientes', count + 1);
+}
+
+function addPaso() {
+    const container = document.getElementById('pasos-container');
+    const count = getTotalForms('pasos');
+    const stepNum = container.querySelectorAll('.paso-form').length + 1;
+    const div = document.createElement('div');
+    div.className = 'paso-form flex gap-3 items-start';
+    div.innerHTML = '<span class="paso-numero bg-orange-500 text-white rounded-full w-6 h-6 flex items-center justify-center flex-shrink-0 mt-2">' + stepNum + '</span>' +
+        '<textarea name="pasos-' + count + '-descripcion" id="id_pasos-' + count + '-descripcion" class="flex-1 p-2 border border-gray-300 rounded-md h-20 w-full" placeholder="Describe este paso de la receta"></textarea>' +
+        '<input type="hidden" name="pasos-' + count + '-id" id="id_pasos-' + count + '-id">' +
+        '<button type="button" onclick="removeForm(this, \'paso-form\')" class="px-3 py-2 bg-red-400 text-white rounded-md hover:bg-red-500 flex-shrink-0 mt-1"><i class="fa-solid fa-trash"></i></button>';
+    container.appendChild(div);
+    setTotalForms('pasos', count + 1);
+    updatePasoNumbers();
+}
+
+function removeForm(btn, className) {
+    btn.closest('.' + className).remove();
+    if (className === 'paso-form') updatePasoNumbers();
+}
+
+function updatePasoNumbers() {
+    document.querySelectorAll('.paso-form').forEach(function (div, i) {
+        const num = div.querySelector('.paso-numero');
+        if (num) num.textContent = i + 1;
+    });
+}
+</script>
+{% endblock %}

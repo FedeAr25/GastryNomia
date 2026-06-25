@@ -1,6 +1,6 @@
 from django import forms
 from django.forms import inlineformset_factory
-from .models import Receta, Ingrediente, PasoInstruccion
+from .models import Receta, Ingrediente, PasoInstruccion, Etiqueta
 
 _INPUT = 'w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-orange-400 focus:border-transparent'
 _INPUT_ICON = _INPUT + ' pl-10'
@@ -54,6 +54,21 @@ class PasoForm(forms.ModelForm):
             'descripcion': forms.Textarea(attrs={
                 'class': 'flex-1 p-2 border border-gray-300 rounded-md h-20 w-full',
                 'placeholder': 'Describe este paso de la receta',
+            }),
+        }
+
+
+class EtiquetaForm(forms.ModelForm):
+    class Meta:
+        model = Etiqueta
+        fields = ['nombre', 'color']
+        widgets = {
+            'nombre': forms.TextInput(attrs={
+                'class': 'flex-1 p-2 border border-gray-300 rounded-md text-sm focus:ring-2 focus:ring-orange-400 focus:border-transparent',
+                'placeholder': 'Ej: Italiana, Vegana, Rápida...',
+            }),
+            'color': forms.Select(attrs={
+                'class': 'p-2 border border-gray-300 rounded-md text-sm bg-white focus:ring-2 focus:ring-orange-400',
             }),
         }
 

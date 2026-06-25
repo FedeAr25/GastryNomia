@@ -85,9 +85,17 @@
 
                     <!-- Etiquetas -->
                     <div>
-                        <label class="block text-gray-700 font-medium mb-2">Etiquetas</label>
-                        <p class="text-xs text-gray-400 mb-2">Hacé clic para seleccionar. Se muestran en la card de la receta.</p>
-                        <div class="flex flex-wrap gap-2">
+                        <div class="flex items-center justify-between mb-2">
+                            <label class="block text-gray-700 font-medium">Etiquetas</label>
+                            {% if perms.Landing.add_etiqueta %}
+                            <button type="button" onclick="openEtiquetasModal()"
+                                class="text-xs text-orange-500 hover:text-orange-700 flex items-center gap-1">
+                                <i class="fa-solid fa-pen-to-square"></i> Gestionar etiquetas
+                            </button>
+                            {% endif %}
+                        </div>
+                        <p class="text-xs text-gray-400 mb-2">Hacé clic para seleccionar.</p>
+                        <div id="etiquetas-selector" class="flex flex-wrap gap-2">
                             {% for etiqueta in etiquetas_disponibles %}
                             <label class="cursor-pointer select-none">
                                 <input type="checkbox"
@@ -103,12 +111,9 @@
                                 </span>
                             </label>
                             {% empty %}
-                            <p class="text-sm text-gray-400 italic">No hay etiquetas disponibles. Pedile a un administrador que las cree.</p>
+                            <p id="no-etiquetas-msg" class="text-sm text-gray-400 italic">No hay etiquetas. Hacé clic en "Gestionar etiquetas" para crear.</p>
                             {% endfor %}
                         </div>
-                        {% if form.etiquetas.errors %}
-                            <p class="text-red-500 text-sm mt-1">{{ form.etiquetas.errors|join:", " }}</p>
-                        {% endif %}
                     </div>
                 </div>
             </div>
@@ -201,21 +206,315 @@
     </div>
 </section>
 
+{% if perms.Landing.add_etiqueta %}
+<!-- Modal: Gestionar Etiquetas -->
+<div id="modal-etiquetas" style="display:none;"
+    class="fixed inset-0 z-50 bg-black/50 flex items-center justify-center p-4">
+    <div class="bg-white rounded-xl shadow-xl w-full max-w-lg flex flex-col max-h-[90vh]">
+
+        <!-- Header -->
+        <div class="flex items-center justify-between p-5 border-b flex-shrink-0">
+            <h2 class="text-lg font-bold text-gray-800 flex items-center gap-2">
+                <i class="fa-solid fa-tags text-orange-500"></i> Gestionar Etiquetas
+            </h2>
+            <button type="button" onclick="closeEtiquetasModal()" class="text-gray-400 hover:text-gray-600">
+                <i class="fa-solid fa-xmark text-xl"></i>
+            </button>
+        </div>
+
+        <!-- Crear nueva etiqueta -->
+        <div class="p-5 border-b flex-shrink-0">
+            <p class="text-sm font-semibold text-gray-700 mb-3">Nueva etiqueta</p>
+            <div class="flex gap-2 items-start flex-wrap sm:flex-nowrap">
+                <input type="text" id="nueva-nombre"
+                    class="flex-1 min-w-0 p-2 border border-gray-300 rounded-md text-sm focus:ring-2 focus:ring-orange-400 focus:border-transparent"
+                    placeholder="Ej: Italiana, Vegana, Rápida..."
+                    onkeydown="if(event.key==='Enter'){event.preventDefault();crearEtiqueta();}">
+                <select id="nueva-color"
+                    class="p-2 border border-gray-300 rounded-md text-sm bg-white focus:ring-2 focus:ring-orange-400 flex-shrink-0">
+                    {% for val, label in color_choices %}
+                    <option value="{{ val }}">{{ label }}</option>
+                    {% endfor %}
+                </select>
+                <button type="button" onclick="crearEtiqueta()"
+                    class="px-3 py-2 bg-orange-500 text-white rounded-md text-sm hover:bg-orange-600 whitespace-nowrap flex-shrink-0">
+                    <i class="fa-solid fa-plus mr-1"></i> Crear
+                </button>
+            </div>
+            <p id="crear-error" class="hidden text-red-500 text-xs mt-1">El nombre es requerido.</p>
+        </div>
+
+        <!-- Lista de etiquetas -->
+        <div class="overflow-y-auto flex-1 p-5">
+            <div id="modal-lista" class="space-y-1">
+                {% for etiqueta in etiquetas_disponibles %}
+                <div class="etiqueta-row py-1" data-pk="{{ etiqueta.pk }}">
+                    <div class="etiqueta-view flex items-center gap-2">
+                        <span class="text-xs px-2.5 py-1 rounded-full flex-shrink-0"
+                              style="{{ etiqueta.get_badge_style }}">{{ etiqueta.nombre }}</span>
+                        <div class="ml-auto flex gap-3 flex-shrink-0">
+                            <button type="button" onclick="toggleEditEtiqueta({{ etiqueta.pk }})"
+                                class="text-gray-400 hover:text-orange-500">
+                                <i class="fa-solid fa-pen text-xs"></i>
+                            </button>
+                            <button type="button" onclick="eliminarEtiqueta({{ etiqueta.pk }}, '{{ etiqueta.nombre|escapejs }}')"
+                                class="text-gray-400 hover:text-red-500">
+                                <i class="fa-solid fa-trash text-xs"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="etiqueta-edit hidden flex gap-2 items-center mt-1">
+                        <input type="text" class="edit-nombre flex-1 p-1.5 border border-gray-300 rounded-md text-sm focus:ring-2 focus:ring-orange-400 focus:border-transparent"
+                               value="{{ etiqueta.nombre }}">
+                        <select class="edit-color p-1.5 border border-gray-300 rounded-md text-sm bg-white focus:ring-2 focus:ring-orange-400 flex-shrink-0">
+                            {% for val, label in color_choices %}
+                            <option value="{{ val }}" {% if etiqueta.color == val %}selected{% endif %}>{{ label }}</option>
+                            {% endfor %}
+                        </select>
+                        <button type="button" onclick="guardarEtiqueta({{ etiqueta.pk }})"
+                            class="px-2 py-1.5 bg-orange-500 text-white rounded-md text-xs hover:bg-orange-600 flex-shrink-0">
+                            <i class="fa-solid fa-check"></i>
+                        </button>
+                        <button type="button" onclick="toggleEditEtiqueta({{ etiqueta.pk }})"
+                            class="px-2 py-1.5 border border-gray-300 rounded-md text-xs text-gray-500 hover:bg-gray-50 flex-shrink-0">
+                            <i class="fa-solid fa-xmark"></i>
+                        </button>
+                    </div>
+                </div>
+                {% empty %}
+                <p id="modal-empty" class="text-sm text-gray-400 italic text-center py-6">
+                    Aún no hay etiquetas. ¡Creá la primera!
+                </p>
+                {% endfor %}
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="p-4 border-t flex-shrink-0 text-right">
+            <button type="button" onclick="closeEtiquetasModal()"
+                class="px-5 py-2 bg-orange-500 text-white rounded-lg text-sm hover:bg-orange-600">
+                Listo
+            </button>
+        </div>
+    </div>
+</div>
+{% endif %}
+
 <script>
-// Toggle visual de etiquetas
-document.querySelectorAll('.etiqueta-check').forEach(function (cb) {
-    var span = cb.nextElementSibling;
-    function sync() {
-        span.style.cssText = cb.checked ? cb.dataset.styleSel : cb.dataset.style;
-    }
-    cb.addEventListener('change', sync);
-    sync();
+// ---- Configuración ----
+var CSRF = '{{ csrf_token }}';
+var URL_CREAR   = '{% url "etiqueta_crear" %}';
+var URL_EDITAR  = '{% url "etiqueta_editar" pk=999 %}'.replace('/999/', '/{pk}/');
+var URL_ELIMINAR = '{% url "etiqueta_eliminar" pk=999 %}'.replace('/999/', '/{pk}/');
+var COLOR_CHOICES = {{ color_choices_json|safe }};
+
+function getUrl(tpl, pk) { return tpl.replace('{pk}', pk); }
+
+// ---- Chips selector (main form) ----
+function initChips() {
+    document.querySelectorAll('.etiqueta-check').forEach(function (cb) {
+        var span = cb.nextElementSibling;
+        function sync() { span.style.cssText = cb.checked ? cb.dataset.styleSel : cb.dataset.style; }
+        cb.addEventListener('change', sync);
+        sync();
+    });
+}
+initChips();
+
+// ---- Modal ----
+function openEtiquetasModal() {
+    document.getElementById('modal-etiquetas').style.display = 'flex';
+}
+function closeEtiquetasModal() {
+    document.getElementById('modal-etiquetas').style.display = 'none';
+}
+document.getElementById('modal-etiquetas').addEventListener('click', function (e) {
+    if (e.target === this) closeEtiquetasModal();
 });
 
+// ---- AJAX helpers ----
+function etiquetaFetch(url, body, cb) {
+    fetch(url, {
+        method: 'POST',
+        body: body,
+        headers: {'X-Requested-With': 'XMLHttpRequest'},
+    }).then(function (r) { return r.json(); }).then(cb).catch(function (e) { console.error(e); });
+}
+
+function makeFormData(obj) {
+    var fd = new FormData();
+    fd.append('csrfmiddlewaretoken', CSRF);
+    Object.keys(obj).forEach(function (k) { fd.append(k, obj[k]); });
+    return fd;
+}
+
+function esc(s) {
+    return String(s)
+        .replace(/&/g, '&amp;').replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+}
+
+function buildColorOptions(selected) {
+    return COLOR_CHOICES.map(function (c) {
+        return '<option value="' + c[0] + '"' + (c[0] === selected ? ' selected' : '') + '>' + esc(c[1]) + '</option>';
+    }).join('');
+}
+
+// ---- Crear etiqueta ----
+function crearEtiqueta() {
+    var nombre = document.getElementById('nueva-nombre').value.trim();
+    var color  = document.getElementById('nueva-color').value;
+    var errEl  = document.getElementById('crear-error');
+    if (!nombre) { errEl.classList.remove('hidden'); return; }
+    errEl.classList.add('hidden');
+
+    etiquetaFetch(URL_CREAR, makeFormData({nombre: nombre, color: color}), function (res) {
+        if (!res.ok) return;
+        document.getElementById('nueva-nombre').value = '';
+        var empty = document.getElementById('modal-empty');
+        if (empty) empty.remove();
+        var noMsg = document.getElementById('no-etiquetas-msg');
+        if (noMsg) noMsg.remove();
+        appendRowToModal(res);
+        appendChipToSelector(res);
+    });
+}
+
+// ---- Row HTML ----
+function buildRowInner(e) {
+    var safeName = esc(e.nombre);
+    var jsName   = e.nombre.replace(/\\/g, '\\\\').replace(/'/g, "\\'");
+    return '<div class="etiqueta-view flex items-center gap-2">' +
+        '<span class="text-xs px-2.5 py-1 rounded-full flex-shrink-0" style="' + esc(e.badge_style) + '">' + safeName + '</span>' +
+        '<div class="ml-auto flex gap-3 flex-shrink-0">' +
+        '<button type="button" onclick="toggleEditEtiqueta(' + e.pk + ')" class="text-gray-400 hover:text-orange-500"><i class="fa-solid fa-pen text-xs"></i></button>' +
+        '<button type="button" onclick="eliminarEtiqueta(' + e.pk + ', \'' + jsName + '\')" class="text-gray-400 hover:text-red-500"><i class="fa-solid fa-trash text-xs"></i></button>' +
+        '</div></div>' +
+        '<div class="etiqueta-edit hidden flex gap-2 items-center mt-1">' +
+        '<input type="text" class="edit-nombre flex-1 p-1.5 border border-gray-300 rounded-md text-sm focus:ring-2 focus:ring-orange-400 focus:border-transparent" value="' + safeName + '">' +
+        '<select class="edit-color p-1.5 border border-gray-300 rounded-md text-sm bg-white focus:ring-2 focus:ring-orange-400 flex-shrink-0">' + buildColorOptions(e.color) + '</select>' +
+        '<button type="button" onclick="guardarEtiqueta(' + e.pk + ')" class="px-2 py-1.5 bg-orange-500 text-white rounded-md text-xs hover:bg-orange-600 flex-shrink-0"><i class="fa-solid fa-check"></i></button>' +
+        '<button type="button" onclick="toggleEditEtiqueta(' + e.pk + ')" class="px-2 py-1.5 border border-gray-300 rounded-md text-xs text-gray-500 hover:bg-gray-50 flex-shrink-0"><i class="fa-solid fa-xmark"></i></button>' +
+        '</div>';
+}
+
+function appendRowToModal(e) {
+    var lista = document.getElementById('modal-lista');
+    var row   = document.createElement('div');
+    row.className  = 'etiqueta-row py-1';
+    row.dataset.pk = e.pk;
+    row.innerHTML  = buildRowInner(e);
+    lista.appendChild(row);
+}
+
+// ---- Chip (main form selector) ----
+function appendChipToSelector(e) {
+    var sel  = document.getElementById('etiquetas-selector');
+    var lbl  = document.createElement('label');
+    lbl.className = 'cursor-pointer select-none';
+    var inp  = document.createElement('input');
+    inp.type  = 'checkbox';
+    inp.name  = 'etiquetas';
+    inp.value = e.pk;
+    inp.className       = 'hidden etiqueta-check';
+    inp.dataset.style   = e.badge_style;
+    inp.dataset.styleSel = e.badge_style_sel;
+    var span = document.createElement('span');
+    span.className = 'text-xs px-2.5 py-1 rounded-full border border-transparent transition-all';
+    span.style.cssText = e.badge_style;
+    span.textContent   = e.nombre;
+    inp.addEventListener('change', function () {
+        span.style.cssText = this.checked ? this.dataset.styleSel : this.dataset.style;
+    });
+    lbl.appendChild(inp);
+    lbl.appendChild(span);
+    sel.appendChild(lbl);
+}
+
+function updateChipInSelector(pk, e) {
+    var inp = document.querySelector('#etiquetas-selector input[value="' + pk + '"]');
+    if (!inp) return;
+    var span = inp.nextElementSibling;
+    inp.dataset.style    = e.badge_style;
+    inp.dataset.styleSel = e.badge_style_sel;
+    span.textContent     = e.nombre;
+    span.style.cssText   = inp.checked ? e.badge_style_sel : e.badge_style;
+}
+
+function removeChipFromSelector(pk) {
+    var inp = document.querySelector('#etiquetas-selector input[value="' + pk + '"]');
+    if (inp) inp.closest('label').remove();
+}
+
+// ---- Toggle edición en modal ----
+function toggleEditEtiqueta(pk) {
+    var row = document.querySelector('.etiqueta-row[data-pk="' + pk + '"]');
+    if (!row) return;
+    row.querySelector('.etiqueta-view').classList.toggle('hidden');
+    row.querySelector('.etiqueta-edit').classList.toggle('hidden');
+}
+
+// ---- Guardar edición ----
+function guardarEtiqueta(pk) {
+    var row    = document.querySelector('.etiqueta-row[data-pk="' + pk + '"]');
+    if (!row) return;
+    var nombre = row.querySelector('.edit-nombre').value.trim();
+    var color  = row.querySelector('.edit-color').value;
+    if (!nombre) return;
+
+    etiquetaFetch(getUrl(URL_EDITAR, pk), makeFormData({nombre: nombre, color: color}), function (res) {
+        if (!res.ok) return;
+        // actualizar vista en modal
+        var viewSpan = row.querySelector('.etiqueta-view span');
+        viewSpan.textContent   = res.nombre;
+        viewSpan.style.cssText = res.badge_style;
+        // actualizar botón eliminar con nuevo nombre
+        var delBtn = row.querySelector('.etiqueta-view button:last-child');
+        var jsName = res.nombre.replace(/\\/g, '\\\\').replace(/'/g, "\\'");
+        delBtn.setAttribute('onclick', "eliminarEtiqueta(" + res.pk + ", '" + jsName + "')");
+        // actualizar campo edición
+        row.querySelector('.edit-nombre').value = res.nombre;
+        row.querySelector('.edit-color').innerHTML = buildColorOptions(res.color);
+        // volver a vista
+        row.querySelector('.etiqueta-view').classList.remove('hidden');
+        row.querySelector('.etiqueta-edit').classList.add('hidden');
+        // actualizar chip en formulario principal
+        updateChipInSelector(pk, res);
+    });
+}
+
+// ---- Eliminar ----
+function eliminarEtiqueta(pk, nombre) {
+    if (!confirm('¿Eliminar la etiqueta «' + nombre + '»?')) return;
+
+    etiquetaFetch(getUrl(URL_ELIMINAR, pk), makeFormData({}), function (res) {
+        if (!res.ok) return;
+        var row = document.querySelector('.etiqueta-row[data-pk="' + pk + '"]');
+        if (row) row.remove();
+        removeChipFromSelector(pk);
+        // mensaje vacío si no quedan etiquetas
+        if (!document.querySelector('.etiqueta-row')) {
+            var empty = document.createElement('p');
+            empty.id = 'modal-empty';
+            empty.className = 'text-sm text-gray-400 italic text-center py-6';
+            empty.textContent = 'Aún no hay etiquetas. ¡Creá la primera!';
+            document.getElementById('modal-lista').appendChild(empty);
+        }
+        if (!document.querySelector('#etiquetas-selector input')) {
+            var msg = document.createElement('p');
+            msg.id = 'no-etiquetas-msg';
+            msg.className = 'text-sm text-gray-400 italic';
+            msg.textContent = 'No hay etiquetas. Hacé clic en "Gestionar etiquetas" para crear.';
+            document.getElementById('etiquetas-selector').appendChild(msg);
+        }
+    });
+}
+
+// ---- Imagen preview ----
 document.getElementById('id_imagen').addEventListener('change', function (e) {
-    const file = e.target.files[0];
+    var file = e.target.files[0];
     if (!file) return;
-    const reader = new FileReader();
+    var reader = new FileReader();
     reader.onload = function (e) {
         document.getElementById('img-preview').src = e.target.result;
         document.getElementById('img-preview').classList.remove('hidden');
@@ -226,6 +525,7 @@ document.getElementById('id_imagen').addEventListener('change', function (e) {
     reader.readAsDataURL(file);
 });
 
+// ---- Formsets dinámicos ----
 function getTotalForms(prefix) {
     return parseInt(document.getElementById('id_' + prefix + '-TOTAL_FORMS').value);
 }
@@ -235,9 +535,9 @@ function setTotalForms(prefix, val) {
 }
 
 function addIngrediente() {
-    const container = document.getElementById('ingredientes-container');
-    const count = getTotalForms('ingredientes');
-    const div = document.createElement('div');
+    var container = document.getElementById('ingredientes-container');
+    var count     = getTotalForms('ingredientes');
+    var div       = document.createElement('div');
     div.className = 'ingrediente-form flex gap-2 items-center';
     div.innerHTML =
         '<input type="text" name="ingredientes-' + count + '-descripcion"' +
@@ -253,10 +553,10 @@ function addIngrediente() {
 }
 
 function addPaso() {
-    const container = document.getElementById('pasos-container');
-    const count = getTotalForms('pasos');
-    const stepNum = container.querySelectorAll('.paso-form').length + 1;
-    const div = document.createElement('div');
+    var container = document.getElementById('pasos-container');
+    var count     = getTotalForms('pasos');
+    var stepNum   = container.querySelectorAll('.paso-form').length + 1;
+    var div       = document.createElement('div');
     div.className = 'paso-form flex gap-3 items-start';
     div.innerHTML =
         '<span class="paso-numero bg-orange-500 text-white rounded-full w-6 h-6 flex items-center justify-center flex-shrink-0 mt-2">' + stepNum + '</span>' +
@@ -280,7 +580,7 @@ function removeForm(btn, className) {
 
 function updatePasoNumbers() {
     document.querySelectorAll('.paso-form').forEach(function (div, i) {
-        const num = div.querySelector('.paso-numero');
+        var num = div.querySelector('.paso-numero');
         if (num) num.textContent = i + 1;
     });
 }
