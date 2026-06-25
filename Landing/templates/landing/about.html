@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-
+{% load static %}
 {% block body %}
 <section class="bg-white md:m-2 md:rounded-lg flex-1 overflow-y-auto mt-16 md:mt-0">
     <div class="p-4 sm:p-6 md:p-8">
@@ -76,7 +76,7 @@
                 <div class="border rounded-lg overflow-hidden hover:shadow-lg transition-shadow">
                     <div class="h-40 bg-orange-50 flex items-center justify-center">
                         <img class="w-24 h-24 rounded-full object-cover border-4 border-white shadow-md"
-                            src="./assets/images/eman-about.jpeg" alt="Emanuel">
+                            src="{% static 'images/emanzh.png' %}" alt="Emanuel">
                     </div>
                     <div class="p-4 text-center">
                         <h3 class="font-bold text-lg">Emanuel Cepeda Cáceres</h3>
@@ -88,7 +88,7 @@
                 <div class="border rounded-lg overflow-hidden hover:shadow-lg transition-shadow">
                     <div class="h-40 bg-orange-50 flex items-center justify-center">
                         <img class="w-24 h-24 rounded-full object-cover border-4 border-white shadow-md"
-                            src="docs/integrantes/emanzh.png" alt="Emanuel">
+                            src="{% static 'images/Fede.jpeg' %}" alt="Federico">
                     </div>
                     <div class="p-4 text-center">
                         <h3 class="font-bold text-lg">Federico Ezequiel Arballo</h3>
@@ -99,10 +99,6 @@
                 </div>
             </div>
         </section>
-
-        <iframe src="https://prezi.com/p/embed/SZjBIoq4Sc3UfOHz062N/" id="iframe_container" frameborder="0"
-            webkitallowfullscreen="" mozallowfullscreen="" allowfullscreen="" allow="autoplay; fullscreen" height="315"
-            width="560" class="w-full h-128 rounded-lg my-8"></iframe>
 
         <section class="mb-8 sm:mb-10">
             <h2 class="text-xl font-bold text-gray-800 mb-4 flex items-center">
