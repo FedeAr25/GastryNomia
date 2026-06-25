@@ -1,6 +1,8 @@
 from django import forms
-from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from .models import UsuarioPersonalizado
+
+input_styles = "w-full px-4 py-3 bg-gray-200 border border-gray-200 rounded-xl text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent transition duration-200"
 
 
 class UsuarioPersonalizadoForm(UserCreationForm):
@@ -10,16 +12,21 @@ class UsuarioPersonalizadoForm(UserCreationForm):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-
-        # 1. Eliminar el texto de ayuda SOLO del Username:
+        self.fields["username"].widget.attrs.update({"class": input_styles})
+        self.fields["password1"].widget.attrs.update({"class": input_styles})
+        self.fields["password2"].widget.attrs.update({"class": input_styles})
+        self.fields["telefono"].widget.attrs.update({"class": input_styles})
+        self.fields["dni"].widget.attrs.update({"class": input_styles})
         self.fields["username"].help_text = ""
+        self.fields["password1"].help_text = ""
 
-        # 2. Eliminar el texto de ayuda SOLO de la contraseña (las reglas):
-        # En los formularios de creación de Django, el primer campo de contraseña se llama 'username' o viene atado a validadores,
-        # pero para quitar ese bloque gigante de texto de las contraseñas puedes vaciar estos campos que lo traen embebido:
-        if "username" in self.fields:
-            self.fields["username"].help_text = ""
 
-        # Si tienes campos específicos de los que quieras borrar el texto,
-        # simplemente los llamas por su nombre entre los corchetes:
-        # self.fields['telefono'].help_text = ''
+class UsuarioAuthenticationForm(AuthenticationForm):
+    class Meta:
+        model = UsuarioPersonalizado
+        fields = ("username", "password")
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields["username"].widget.attrs.update({"class": input_styles})
+        self.fields["password"].widget.attrs.update({"class": input_styles})
